@@ -9,28 +9,109 @@
 /* Begin PBXBuildFile section */
 		073EB2A5250BF6CE00DD007B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2A4250BF6CE00DD007B /* AppDelegate.m */; };
 		073EB2A8250BF6CE00DD007B /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2A7250BF6CE00DD007B /* SceneDelegate.m */; };
-		073EB2AB250BF6CE00DD007B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2AA250BF6CE00DD007B /* ViewController.m */; };
 		073EB2AE250BF6CE00DD007B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 073EB2AC250BF6CE00DD007B /* Main.storyboard */; };
 		073EB2B1250BF6CE00DD007B /* ShockVx.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2AF250BF6CE00DD007B /* ShockVx.xcdatamodeld */; };
 		073EB2B3250BF6CF00DD007B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 073EB2B2250BF6CF00DD007B /* Assets.xcassets */; };
-		073EB2B6250BF6CF00DD007B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 073EB2B4250BF6CF00DD007B /* LaunchScreen.storyboard */; };
-		073EB2B9250BF6D000DD007B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2B8250BF6D000DD007B /* main.m */; };
+		073EB2B6250BF6CF00DD007B /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 073EB2B4250BF6CF00DD007B /* Launch.storyboard */; };
+		073EB2B9250BF6D000DD007B /* Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2B8250BF6D000DD007B /* Application.m */; };
+		073EB2C2250BF8EE00DD007B /* AppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2C1250BF8EE00DD007B /* AppSettings.m */; };
+		073EB2C7250C083600DD007B /* AssetListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2C6250C083600DD007B /* AssetListController.m */; };
+		073EB2CA250C08D500DD007B /* AssetListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2C9250C08D500DD007B /* AssetListCell.m */; };
+		073EB2CF250D402400DD007B /* AssetTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2CE250D402400DD007B /* AssetTag.m */; };
+		073EB2D2250D40ED00DD007B /* AssetIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2D1250D40ED00DD007B /* AssetIdentifier.m */; };
+		073EB2D6250D583200DD007B /* AssetSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2D5250D583200DD007B /* AssetSensor.m */; };
+		073EB2DA250D59AD00DD007B /* SensorAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2D9250D59AD00DD007B /* SensorAccess.m */; };
+		073EB2DD250D59BC00DD007B /* SensorInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2DC250D59BC00DD007B /* SensorInformation.m */; };
+		073EB2E0250D59CE00DD007B /* SensorControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2DF250D59CE00DD007B /* SensorControl.m */; };
+		073EB2E3250D59DC00DD007B /* SensorBattery.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2E2250D59DC00DD007B /* SensorBattery.m */; };
+		075C73F82513FD4E00A0F5D7 /* AssetTelemetryHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 075C73F72513FD4E00A0F5D7 /* AssetTelemetryHeader.m */; };
+		075C73FD25140BC400A0F5D7 /* BatteryControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 075C73FC25140BC400A0F5D7 /* BatteryControl.m */; };
+		075C740125140BD400A0F5D7 /* SignalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 075C740025140BD400A0F5D7 /* SignalControl.m */; };
+		077FB15D250D9DE30002A716 /* AssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB15C250D9DE30002A716 /* AssetViewController.m */; };
+		077FB160250D9E5B0002A716 /* AssetTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB15F250D9E5B0002A716 /* AssetTabsController.m */; };
+		077FB163250D9EE80002A716 /* AssetSettingsTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB162250D9EE80002A716 /* AssetSettingsTabController.m */; };
+		077FB169250D9FA10002A716 /* AssetTrackingTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB168250D9FA10002A716 /* AssetTrackingTabController.m */; };
+		077FB16C250DA1630002A716 /* AssetRecordsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB16B250DA1630002A716 /* AssetRecordsController.m */; };
+		077FB170250EEC0A0002A716 /* AccountRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB16F250EEC0A0002A716 /* AccountRegistrationViewController.m */; };
+		077FB172250EFBF10002A716 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077FB171250EFBF10002A716 /* Settings.bundle */; };
+		077FB17525104EA90002A716 /* SensorTelemetry.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17425104EA90002A716 /* SensorTelemetry.m */; };
+		077FB1782510501D0002A716 /* SensorRecords.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB1772510501D0002A716 /* SensorRecords.m */; };
+		077FB17B25111B4F0002A716 /* AssetTelemetryTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17A25111B4F0002A716 /* AssetTelemetryTabController.m */; };
+		077FB17E25111E680002A716 /* AssetTelemetryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17D25111E680002A716 /* AssetTelemetryCell.m */; };
+		07930B1B25291E2000BC9C39 /* AssetRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 07930B1A25291E2000BC9C39 /* AssetRecord.m */; };
+		07930B1F2529207E00BC9C39 /* AssetRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 07930B1E2529207E00BC9C39 /* AssetRegistry.m */; };
+		07930B24252A22B500BC9C39 /* AssetBroadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 07930B23252A22B500BC9C39 /* AssetBroadcast.m */; };
+		07A3F3BE25126887001BFFF1 /* SensorHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A3F3BD25126887001BFFF1 /* SensorHandling.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		073EB2A0250BF6CE00DD007B /* ShockVx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShockVx.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		073EB2A0250BF6CE00DD007B /* Shock Vx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shock Vx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		073EB2A3250BF6CE00DD007B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		073EB2A4250BF6CE00DD007B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		073EB2A6250BF6CE00DD007B /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		073EB2A7250BF6CE00DD007B /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		073EB2A9250BF6CE00DD007B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		073EB2AA250BF6CE00DD007B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		073EB2AD250BF6CE00DD007B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		073EB2B0250BF6CE00DD007B /* ShockVx.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShockVx.xcdatamodel; sourceTree = "<group>"; };
 		073EB2B2250BF6CF00DD007B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		073EB2B5250BF6CF00DD007B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		073EB2B5250BF6CF00DD007B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Launch.storyboard; sourceTree = "<group>"; };
 		073EB2B7250BF6D000DD007B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		073EB2B8250BF6D000DD007B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		073EB2B8250BF6D000DD007B /* Application.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Application.m; sourceTree = "<group>"; };
+		073EB2C0250BF8EE00DD007B /* AppSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppSettings.h; sourceTree = "<group>"; };
+		073EB2C1250BF8EE00DD007B /* AppSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppSettings.m; sourceTree = "<group>"; };
+		073EB2C5250C083600DD007B /* AssetListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetListController.h; sourceTree = "<group>"; };
+		073EB2C6250C083600DD007B /* AssetListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetListController.m; sourceTree = "<group>"; };
+		073EB2C8250C08D400DD007B /* AssetListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetListCell.h; sourceTree = "<group>"; };
+		073EB2C9250C08D500DD007B /* AssetListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetListCell.m; sourceTree = "<group>"; };
+		073EB2CD250D402400DD007B /* AssetTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTag.h; sourceTree = "<group>"; };
+		073EB2CE250D402400DD007B /* AssetTag.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetTag.m; sourceTree = "<group>"; };
+		073EB2D0250D40ED00DD007B /* AssetIdentifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetIdentifier.h; sourceTree = "<group>"; };
+		073EB2D1250D40ED00DD007B /* AssetIdentifier.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetIdentifier.m; sourceTree = "<group>"; };
+		073EB2D3250D45AC00DD007B /* ShockVx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShockVx.entitlements; sourceTree = "<group>"; };
+		073EB2D4250D583200DD007B /* AssetSensor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetSensor.h; sourceTree = "<group>"; };
+		073EB2D5250D583200DD007B /* AssetSensor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetSensor.m; sourceTree = "<group>"; };
+		073EB2D8250D59AD00DD007B /* SensorAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorAccess.h; sourceTree = "<group>"; };
+		073EB2D9250D59AD00DD007B /* SensorAccess.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorAccess.m; sourceTree = "<group>"; };
+		073EB2DB250D59BC00DD007B /* SensorInformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorInformation.h; sourceTree = "<group>"; };
+		073EB2DC250D59BC00DD007B /* SensorInformation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorInformation.m; sourceTree = "<group>"; };
+		073EB2DE250D59CE00DD007B /* SensorControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorControl.h; sourceTree = "<group>"; };
+		073EB2DF250D59CE00DD007B /* SensorControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorControl.m; sourceTree = "<group>"; };
+		073EB2E1250D59DC00DD007B /* SensorBattery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorBattery.h; sourceTree = "<group>"; };
+		073EB2E2250D59DC00DD007B /* SensorBattery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorBattery.m; sourceTree = "<group>"; };
+		075C73F62513FD4E00A0F5D7 /* AssetTelemetryHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTelemetryHeader.h; sourceTree = "<group>"; };
+		075C73F72513FD4E00A0F5D7 /* AssetTelemetryHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetTelemetryHeader.m; sourceTree = "<group>"; };
+		075C73FB25140BC400A0F5D7 /* BatteryControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatteryControl.h; sourceTree = "<group>"; };
+		075C73FC25140BC400A0F5D7 /* BatteryControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatteryControl.m; sourceTree = "<group>"; };
+		075C73FF25140BD400A0F5D7 /* SignalControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalControl.h; sourceTree = "<group>"; };
+		075C740025140BD400A0F5D7 /* SignalControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalControl.m; sourceTree = "<group>"; };
+		077FB15B250D9DE30002A716 /* AssetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetViewController.h; sourceTree = "<group>"; };
+		077FB15C250D9DE30002A716 /* AssetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetViewController.m; sourceTree = "<group>"; };
+		077FB15E250D9E5B0002A716 /* AssetTabsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTabsController.h; sourceTree = "<group>"; };
+		077FB15F250D9E5B0002A716 /* AssetTabsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetTabsController.m; sourceTree = "<group>"; };
+		077FB161250D9EE80002A716 /* AssetSettingsTabController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetSettingsTabController.h; sourceTree = "<group>"; };
+		077FB162250D9EE80002A716 /* AssetSettingsTabController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetSettingsTabController.m; sourceTree = "<group>"; };
+		077FB167250D9FA10002A716 /* AssetTrackingTabController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTrackingTabController.h; sourceTree = "<group>"; };
+		077FB168250D9FA10002A716 /* AssetTrackingTabController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetTrackingTabController.m; sourceTree = "<group>"; };
+		077FB16A250DA1630002A716 /* AssetRecordsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetRecordsController.h; sourceTree = "<group>"; };
+		077FB16B250DA1630002A716 /* AssetRecordsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetRecordsController.m; sourceTree = "<group>"; };
+		077FB16E250EEC0A0002A716 /* AccountRegistrationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountRegistrationViewController.h; sourceTree = "<group>"; };
+		077FB16F250EEC0A0002A716 /* AccountRegistrationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccountRegistrationViewController.m; sourceTree = "<group>"; };
+		077FB171250EFBF10002A716 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ShockVx/Settings.bundle; sourceTree = "<group>"; };
+		077FB17325104EA90002A716 /* SensorTelemetry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorTelemetry.h; sourceTree = "<group>"; };
+		077FB17425104EA90002A716 /* SensorTelemetry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorTelemetry.m; sourceTree = "<group>"; };
+		077FB1762510501D0002A716 /* SensorRecords.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorRecords.h; sourceTree = "<group>"; };
+		077FB1772510501D0002A716 /* SensorRecords.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorRecords.m; sourceTree = "<group>"; };
+		077FB17925111B4F0002A716 /* AssetTelemetryTabController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTelemetryTabController.h; sourceTree = "<group>"; };
+		077FB17A25111B4F0002A716 /* AssetTelemetryTabController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetTelemetryTabController.m; sourceTree = "<group>"; };
+		077FB17C25111E680002A716 /* AssetTelemetryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTelemetryCell.h; sourceTree = "<group>"; };
+		077FB17D25111E680002A716 /* AssetTelemetryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetTelemetryCell.m; sourceTree = "<group>"; };
+		07930B1925291E2000BC9C39 /* AssetRecord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetRecord.h; sourceTree = "<group>"; };
+		07930B1A25291E2000BC9C39 /* AssetRecord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetRecord.m; sourceTree = "<group>"; };
+		07930B1D2529207E00BC9C39 /* AssetRegistry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetRegistry.h; sourceTree = "<group>"; };
+		07930B1E2529207E00BC9C39 /* AssetRegistry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetRegistry.m; sourceTree = "<group>"; };
+		07930B22252A22B500BC9C39 /* AssetBroadcast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetBroadcast.h; sourceTree = "<group>"; };
+		07930B23252A22B500BC9C39 /* AssetBroadcast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetBroadcast.m; sourceTree = "<group>"; };
+		07A3F3BC25126887001BFFF1 /* SensorHandling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorHandling.h; sourceTree = "<group>"; };
+		07A3F3BD25126887001BFFF1 /* SensorHandling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorHandling.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,9 +125,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0718CD55252A88700072B5AC /* Application Assets */ = {
+			isa = PBXGroup;
+			children = (
+				073EB2B2250BF6CF00DD007B /* Assets.xcassets */,
+			);
+			path = "Application Assets";
+			sourceTree = "<group>";
+		};
 		073EB297250BF6CE00DD007B = {
 			isa = PBXGroup;
 			children = (
+				077FB171250EFBF10002A716 /* Settings.bundle */,
 				073EB2A2250BF6CE00DD007B /* ShockVx */,
 				073EB2A1250BF6CE00DD007B /* Products */,
 			);
@@ -55,7 +145,7 @@
 		073EB2A1250BF6CE00DD007B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				073EB2A0250BF6CE00DD007B /* ShockVx.app */,
+				073EB2A0250BF6CE00DD007B /* Shock Vx.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,20 +153,153 @@
 		073EB2A2250BF6CE00DD007B /* ShockVx */ = {
 			isa = PBXGroup;
 			children = (
-				073EB2A3250BF6CE00DD007B /* AppDelegate.h */,
-				073EB2A4250BF6CE00DD007B /* AppDelegate.m */,
-				073EB2A6250BF6CE00DD007B /* SceneDelegate.h */,
-				073EB2A7250BF6CE00DD007B /* SceneDelegate.m */,
-				073EB2A9250BF6CE00DD007B /* ViewController.h */,
-				073EB2AA250BF6CE00DD007B /* ViewController.m */,
-				073EB2AC250BF6CE00DD007B /* Main.storyboard */,
-				073EB2B2250BF6CF00DD007B /* Assets.xcassets */,
-				073EB2B4250BF6CF00DD007B /* LaunchScreen.storyboard */,
+				0718CD55252A88700072B5AC /* Application Assets */,
+				073EB2BF250BF84E00DD007B /* Application */,
+				073EB2C4250BF94E00DD007B /* Application Data */,
+				073EB2C3250BF90700DD007B /* Application Interface */,
+				075C73FA25140B9000A0F5D7 /* Application Elements */,
+				073EB2CC250D3FB400DD007B /* Application Support */,
+				073EB2D3250D45AC00DD007B /* ShockVx.entitlements */,
 				073EB2B7250BF6D000DD007B /* Info.plist */,
-				073EB2B8250BF6D000DD007B /* main.m */,
-				073EB2AF250BF6CE00DD007B /* ShockVx.xcdatamodeld */,
 			);
 			path = ShockVx;
+			sourceTree = "<group>";
+		};
+		073EB2BF250BF84E00DD007B /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				073EB2B8250BF6D000DD007B /* Application.m */,
+				073EB2A3250BF6CE00DD007B /* AppDelegate.h */,
+				073EB2A4250BF6CE00DD007B /* AppDelegate.m */,
+				073EB2C0250BF8EE00DD007B /* AppSettings.h */,
+				073EB2C1250BF8EE00DD007B /* AppSettings.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		073EB2C3250BF90700DD007B /* Application Interface */ = {
+			isa = PBXGroup;
+			children = (
+				077FB16D250EEBE30002A716 /* Account Registration */,
+				077FB15A250D9DC60002A716 /* Asset Connection */,
+				077FB159250D9DBD0002A716 /* Asset View */,
+				073EB2CB250C08DF00DD007B /* Asset List */,
+				073EB2A6250BF6CE00DD007B /* SceneDelegate.h */,
+				073EB2A7250BF6CE00DD007B /* SceneDelegate.m */,
+				073EB2B4250BF6CF00DD007B /* Launch.storyboard */,
+				073EB2AC250BF6CE00DD007B /* Main.storyboard */,
+			);
+			path = "Application Interface";
+			sourceTree = "<group>";
+		};
+		073EB2C4250BF94E00DD007B /* Application Data */ = {
+			isa = PBXGroup;
+			children = (
+				073EB2AF250BF6CE00DD007B /* ShockVx.xcdatamodeld */,
+				07930B1925291E2000BC9C39 /* AssetRecord.h */,
+				07930B1A25291E2000BC9C39 /* AssetRecord.m */,
+				07930B1D2529207E00BC9C39 /* AssetRegistry.h */,
+				07930B1E2529207E00BC9C39 /* AssetRegistry.m */,
+			);
+			path = "Application Data";
+			sourceTree = "<group>";
+		};
+		073EB2CB250C08DF00DD007B /* Asset List */ = {
+			isa = PBXGroup;
+			children = (
+				073EB2C5250C083600DD007B /* AssetListController.h */,
+				073EB2C6250C083600DD007B /* AssetListController.m */,
+				073EB2C8250C08D400DD007B /* AssetListCell.h */,
+				073EB2C9250C08D500DD007B /* AssetListCell.m */,
+			);
+			name = "Asset List";
+			sourceTree = "<group>";
+		};
+		073EB2CC250D3FB400DD007B /* Application Support */ = {
+			isa = PBXGroup;
+			children = (
+				073EB2D7250D599000DD007B /* Sensor Services */,
+				073EB2CD250D402400DD007B /* AssetTag.h */,
+				073EB2CE250D402400DD007B /* AssetTag.m */,
+				073EB2D4250D583200DD007B /* AssetSensor.h */,
+				073EB2D5250D583200DD007B /* AssetSensor.m */,
+				073EB2D0250D40ED00DD007B /* AssetIdentifier.h */,
+				073EB2D1250D40ED00DD007B /* AssetIdentifier.m */,
+				07930B22252A22B500BC9C39 /* AssetBroadcast.h */,
+				07930B23252A22B500BC9C39 /* AssetBroadcast.m */,
+			);
+			path = "Application Support";
+			sourceTree = "<group>";
+		};
+		073EB2D7250D599000DD007B /* Sensor Services */ = {
+			isa = PBXGroup;
+			children = (
+				073EB2D8250D59AD00DD007B /* SensorAccess.h */,
+				073EB2D9250D59AD00DD007B /* SensorAccess.m */,
+				073EB2E1250D59DC00DD007B /* SensorBattery.h */,
+				073EB2E2250D59DC00DD007B /* SensorBattery.m */,
+				073EB2DE250D59CE00DD007B /* SensorControl.h */,
+				073EB2DF250D59CE00DD007B /* SensorControl.m */,
+				077FB17325104EA90002A716 /* SensorTelemetry.h */,
+				077FB17425104EA90002A716 /* SensorTelemetry.m */,
+				077FB1762510501D0002A716 /* SensorRecords.h */,
+				077FB1772510501D0002A716 /* SensorRecords.m */,
+				073EB2DB250D59BC00DD007B /* SensorInformation.h */,
+				073EB2DC250D59BC00DD007B /* SensorInformation.m */,
+				07A3F3BC25126887001BFFF1 /* SensorHandling.h */,
+				07A3F3BD25126887001BFFF1 /* SensorHandling.m */,
+			);
+			name = "Sensor Services";
+			sourceTree = "<group>";
+		};
+		075C73FA25140B9000A0F5D7 /* Application Elements */ = {
+			isa = PBXGroup;
+			children = (
+				075C73FB25140BC400A0F5D7 /* BatteryControl.h */,
+				075C73FC25140BC400A0F5D7 /* BatteryControl.m */,
+				075C73FF25140BD400A0F5D7 /* SignalControl.h */,
+				075C740025140BD400A0F5D7 /* SignalControl.m */,
+			);
+			path = "Application Elements";
+			sourceTree = "<group>";
+		};
+		077FB159250D9DBD0002A716 /* Asset View */ = {
+			isa = PBXGroup;
+			children = (
+				077FB15B250D9DE30002A716 /* AssetViewController.h */,
+				077FB15C250D9DE30002A716 /* AssetViewController.m */,
+			);
+			name = "Asset View";
+			sourceTree = "<group>";
+		};
+		077FB15A250D9DC60002A716 /* Asset Connection */ = {
+			isa = PBXGroup;
+			children = (
+				077FB15E250D9E5B0002A716 /* AssetTabsController.h */,
+				077FB15F250D9E5B0002A716 /* AssetTabsController.m */,
+				077FB161250D9EE80002A716 /* AssetSettingsTabController.h */,
+				077FB162250D9EE80002A716 /* AssetSettingsTabController.m */,
+				077FB167250D9FA10002A716 /* AssetTrackingTabController.h */,
+				077FB168250D9FA10002A716 /* AssetTrackingTabController.m */,
+				077FB17925111B4F0002A716 /* AssetTelemetryTabController.h */,
+				077FB17A25111B4F0002A716 /* AssetTelemetryTabController.m */,
+				077FB16A250DA1630002A716 /* AssetRecordsController.h */,
+				077FB16B250DA1630002A716 /* AssetRecordsController.m */,
+				075C73F62513FD4E00A0F5D7 /* AssetTelemetryHeader.h */,
+				075C73F72513FD4E00A0F5D7 /* AssetTelemetryHeader.m */,
+				077FB17C25111E680002A716 /* AssetTelemetryCell.h */,
+				077FB17D25111E680002A716 /* AssetTelemetryCell.m */,
+			);
+			name = "Asset Connection";
+			sourceTree = "<group>";
+		};
+		077FB16D250EEBE30002A716 /* Account Registration */ = {
+			isa = PBXGroup;
+			children = (
+				077FB16E250EEC0A0002A716 /* AccountRegistrationViewController.h */,
+				077FB16F250EEC0A0002A716 /* AccountRegistrationViewController.m */,
+			);
+			name = "Account Registration";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,7 +319,7 @@
 			);
 			name = ShockVx;
 			productName = ShockVx;
-			productReference = 073EB2A0250BF6CE00DD007B /* ShockVx.app */;
+			productReference = 073EB2A0250BF6CE00DD007B /* Shock Vx.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -136,7 +359,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				073EB2B6250BF6CF00DD007B /* LaunchScreen.storyboard in Resources */,
+				077FB172250EFBF10002A716 /* Settings.bundle in Resources */,
+				073EB2B6250BF6CF00DD007B /* Launch.storyboard in Resources */,
 				073EB2B3250BF6CF00DD007B /* Assets.xcassets in Resources */,
 				073EB2AE250BF6CE00DD007B /* Main.storyboard in Resources */,
 			);
@@ -149,11 +373,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				073EB2B9250BF6D000DD007B /* main.m in Sources */,
-				073EB2AB250BF6CE00DD007B /* ViewController.m in Sources */,
+				073EB2B9250BF6D000DD007B /* Application.m in Sources */,
+				073EB2D2250D40ED00DD007B /* AssetIdentifier.m in Sources */,
+				077FB17E25111E680002A716 /* AssetTelemetryCell.m in Sources */,
+				077FB1782510501D0002A716 /* SensorRecords.m in Sources */,
+				07A3F3BE25126887001BFFF1 /* SensorHandling.m in Sources */,
+				073EB2C7250C083600DD007B /* AssetListController.m in Sources */,
+				077FB170250EEC0A0002A716 /* AccountRegistrationViewController.m in Sources */,
+				07930B1F2529207E00BC9C39 /* AssetRegistry.m in Sources */,
+				075C73FD25140BC400A0F5D7 /* BatteryControl.m in Sources */,
+				073EB2C2250BF8EE00DD007B /* AppSettings.m in Sources */,
+				073EB2D6250D583200DD007B /* AssetSensor.m in Sources */,
+				073EB2CA250C08D500DD007B /* AssetListCell.m in Sources */,
+				07930B24252A22B500BC9C39 /* AssetBroadcast.m in Sources */,
+				073EB2CF250D402400DD007B /* AssetTag.m in Sources */,
+				073EB2E3250D59DC00DD007B /* SensorBattery.m in Sources */,
+				077FB169250D9FA10002A716 /* AssetTrackingTabController.m in Sources */,
 				073EB2A5250BF6CE00DD007B /* AppDelegate.m in Sources */,
+				075C73F82513FD4E00A0F5D7 /* AssetTelemetryHeader.m in Sources */,
+				077FB17525104EA90002A716 /* SensorTelemetry.m in Sources */,
 				073EB2B1250BF6CE00DD007B /* ShockVx.xcdatamodeld in Sources */,
+				077FB17B25111B4F0002A716 /* AssetTelemetryTabController.m in Sources */,
+				075C740125140BD400A0F5D7 /* SignalControl.m in Sources */,
+				077FB163250D9EE80002A716 /* AssetSettingsTabController.m in Sources */,
 				073EB2A8250BF6CE00DD007B /* SceneDelegate.m in Sources */,
+				073EB2DD250D59BC00DD007B /* SensorInformation.m in Sources */,
+				077FB15D250D9DE30002A716 /* AssetViewController.m in Sources */,
+				07930B1B25291E2000BC9C39 /* AssetRecord.m in Sources */,
+				073EB2DA250D59AD00DD007B /* SensorAccess.m in Sources */,
+				077FB160250D9E5B0002A716 /* AssetTabsController.m in Sources */,
+				077FB16C250DA1630002A716 /* AssetRecordsController.m in Sources */,
+				073EB2E0250D59CE00DD007B /* SensorControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,12 +418,12 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		073EB2B4250BF6CF00DD007B /* LaunchScreen.storyboard */ = {
+		073EB2B4250BF6CF00DD007B /* Launch.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				073EB2B5250BF6CF00DD007B /* Base */,
 			);
-			name = LaunchScreen.storyboard;
+			name = Launch.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -293,16 +543,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ShockVx/ShockVx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = EY4LZWYGFB;
 				INFOPLIST_FILE = ShockVx/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.velvetwire.ShockVx;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_BUNDLE_IDENTIFIER = com.velvetwire.shockvx;
+				PRODUCT_NAME = "Shock Vx";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -310,16 +562,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ShockVx/ShockVx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = EY4LZWYGFB;
 				INFOPLIST_FILE = ShockVx/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.velvetwire.ShockVx;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_BUNDLE_IDENTIFIER = com.velvetwire.shockvx;
+				PRODUCT_NAME = "Shock Vx";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
