@@ -50,7 +50,7 @@
                                                                      options:@{ CBCentralManagerOptionShowPowerAlertKey:@NO, CBCentralManagerScanOptionAllowDuplicatesKey:@YES }];
 
     // Construct a central manager timer to refresh the scan every minute and
-    // a signal timer to refresh the broadcast signal table every 5 seconds.
+    // a signal timer to refresh the broadcast signal table every 7.5 seconds.
     
     _centralTimer               = [NSTimer scheduledTimerWithTimeInterval:60.0
                                                                    target:self
@@ -58,7 +58,7 @@
                                                                  userInfo:nil
                                                                   repeats:YES];
 
-    _signalTimer                = [NSTimer scheduledTimerWithTimeInterval:5.0
+    _signalTimer                = [NSTimer scheduledTimerWithTimeInterval:7.5
                                                                    target:self
                                                                  selector:@selector(centralTimer:)
                                                                  userInfo:nil
@@ -312,12 +312,12 @@
 // Central manager scan refresh timer
 - (void) centralTimer:(NSTimer *)timer {
 
-    // Pause and restart the scan after 5 seconds.
+    // Pause and restart the scan after 2.5 seconds.
     
     if ( timer == self.centralTimer ) {
     
         [self centralManagerCeaseScan:self.manager];
-        [self performSelector:@selector(centralManagerStartScan:) withObject:self.manager afterDelay:5.0];
+        [self performSelector:@selector(centralManagerStartScan:) withObject:self.manager afterDelay:2.5];
     
     }
     
