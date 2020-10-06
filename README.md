@@ -1,0 +1,1 @@
+ShockVx is an iOS companion application for the ShockVx tracking and telemetry firmware.
