@@ -770,7 +770,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yoT-MN-nbk" userLabel="Measurement settings">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yoT-MN-nbk" userLabel="Telemetry settings">
                                                     <rect key="frame" x="271" y="6.5" width="123" height="32"/>
                                                     <segments>
                                                         <segment title="15 sec"/>
@@ -802,14 +802,14 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="N7S-pT-DGm" userLabel="Record settings">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="N7S-pT-DGm" userLabel="Archive settings">
                                                     <rect key="frame" x="271" y="6.5" width="123" height="32"/>
                                                     <segments>
                                                         <segment title="15 min"/>
                                                         <segment title="60 min"/>
                                                     </segments>
                                                     <connections>
-                                                        <action selector="recordingIntervalSelected:" destination="1vx-Xo-rQc" eventType="valueChanged" id="FFT-kd-mPj"/>
+                                                        <action selector="archiveIntervalSelected:" destination="1vx-Xo-rQc" eventType="valueChanged" id="V2g-ho-Nv4"/>
                                                     </connections>
                                                 </segmentedControl>
                                             </subviews>
@@ -1184,19 +1184,19 @@
                         <outlet property="angleEnable" destination="SqR-VG-sOK" id="kSb-LW-h5a"/>
                         <outlet property="angleLimit" destination="H2b-ne-GPw" id="dcL-ko-lPw"/>
                         <outlet property="angleStepper" destination="C2L-4Q-kz8" id="k50-vg-esx"/>
+                        <outlet property="archiveSettings" destination="N7S-pT-DGm" id="Fq9-dU-ItK"/>
                         <outlet property="careSettings" destination="vR0-ak-CYK" id="1bQ-Z2-Ll6"/>
                         <outlet property="maximumAmbient" destination="S4O-ar-pny" id="JNY-AU-Ejc"/>
                         <outlet property="maximumAmbientStepper" destination="uvb-OY-U0b" id="vMA-jZ-C7E"/>
                         <outlet property="maximumSurface" destination="NMe-Mq-Mwi" id="sBa-LB-QMA"/>
                         <outlet property="maximumSurfaceStepper" destination="nOm-tL-4mi" id="V3o-HH-KHN"/>
-                        <outlet property="measurementSettings" destination="yoT-MN-nbk" id="J03-DS-hIz"/>
                         <outlet property="minimumAmbient" destination="kf8-dz-aEZ" id="Mhb-SA-3TF"/>
                         <outlet property="minimumAmbientStepper" destination="4DQ-Ma-dwu" id="d9H-yc-Wnp"/>
                         <outlet property="minimumSurface" destination="HWV-Sx-of9" id="Q1D-Si-woh"/>
                         <outlet property="minimumSurfaceStepper" destination="qRa-rk-S5L" id="tqV-vk-2wF"/>
                         <outlet property="orientationSettings" destination="EFo-sx-Rpf" id="p1d-FQ-8QF"/>
-                        <outlet property="recordSettings" destination="N7S-pT-DGm" id="1Wg-ho-mU0"/>
                         <outlet property="surfaceEnable" destination="4Rt-Nf-4Pf" id="3Eu-C1-W3I"/>
+                        <outlet property="telemetrySettings" destination="yoT-MN-nbk" id="kOt-af-faP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K9V-3K-zFN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

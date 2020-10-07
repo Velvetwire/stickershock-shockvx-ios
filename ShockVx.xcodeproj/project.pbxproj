@@ -27,6 +27,8 @@
 		075C73F82513FD4E00A0F5D7 /* AssetTelemetryHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 075C73F72513FD4E00A0F5D7 /* AssetTelemetryHeader.m */; };
 		075C73FD25140BC400A0F5D7 /* BatteryControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 075C73FC25140BC400A0F5D7 /* BatteryControl.m */; };
 		075C740125140BD400A0F5D7 /* SignalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 075C740025140BD400A0F5D7 /* SignalControl.m */; };
+		0761F765252D0B1400C0B446 /* SensorSurface.m in Sources */ = {isa = PBXBuildFile; fileRef = 0761F764252D0B1400C0B446 /* SensorSurface.m */; };
+		0761F769252D0B2900C0B446 /* SensorAtmosphere.m in Sources */ = {isa = PBXBuildFile; fileRef = 0761F768252D0B2900C0B446 /* SensorAtmosphere.m */; };
 		077FB15D250D9DE30002A716 /* AssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB15C250D9DE30002A716 /* AssetViewController.m */; };
 		077FB160250D9E5B0002A716 /* AssetTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB15F250D9E5B0002A716 /* AssetTabsController.m */; };
 		077FB163250D9EE80002A716 /* AssetSettingsTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB162250D9EE80002A716 /* AssetSettingsTabController.m */; };
@@ -35,7 +37,6 @@
 		077FB170250EEC0A0002A716 /* AccountRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB16F250EEC0A0002A716 /* AccountRegistrationViewController.m */; };
 		077FB172250EFBF10002A716 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077FB171250EFBF10002A716 /* Settings.bundle */; };
 		077FB17525104EA90002A716 /* SensorTelemetry.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17425104EA90002A716 /* SensorTelemetry.m */; };
-		077FB1782510501D0002A716 /* SensorRecords.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB1772510501D0002A716 /* SensorRecords.m */; };
 		077FB17B25111B4F0002A716 /* AssetTelemetryTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17A25111B4F0002A716 /* AssetTelemetryTabController.m */; };
 		077FB17E25111E680002A716 /* AssetTelemetryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17D25111E680002A716 /* AssetTelemetryCell.m */; };
 		07930B1B25291E2000BC9C39 /* AssetRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 07930B1A25291E2000BC9C39 /* AssetRecord.m */; };
@@ -83,6 +84,10 @@
 		075C73FC25140BC400A0F5D7 /* BatteryControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatteryControl.m; sourceTree = "<group>"; };
 		075C73FF25140BD400A0F5D7 /* SignalControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalControl.h; sourceTree = "<group>"; };
 		075C740025140BD400A0F5D7 /* SignalControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalControl.m; sourceTree = "<group>"; };
+		0761F763252D0B1400C0B446 /* SensorSurface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorSurface.h; sourceTree = "<group>"; };
+		0761F764252D0B1400C0B446 /* SensorSurface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorSurface.m; sourceTree = "<group>"; };
+		0761F767252D0B2900C0B446 /* SensorAtmosphere.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorAtmosphere.h; sourceTree = "<group>"; };
+		0761F768252D0B2900C0B446 /* SensorAtmosphere.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorAtmosphere.m; sourceTree = "<group>"; };
 		077FB15B250D9DE30002A716 /* AssetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetViewController.h; sourceTree = "<group>"; };
 		077FB15C250D9DE30002A716 /* AssetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetViewController.m; sourceTree = "<group>"; };
 		077FB15E250D9E5B0002A716 /* AssetTabsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTabsController.h; sourceTree = "<group>"; };
@@ -98,8 +103,6 @@
 		077FB171250EFBF10002A716 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ShockVx/Settings.bundle; sourceTree = "<group>"; };
 		077FB17325104EA90002A716 /* SensorTelemetry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorTelemetry.h; sourceTree = "<group>"; };
 		077FB17425104EA90002A716 /* SensorTelemetry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorTelemetry.m; sourceTree = "<group>"; };
-		077FB1762510501D0002A716 /* SensorRecords.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorRecords.h; sourceTree = "<group>"; };
-		077FB1772510501D0002A716 /* SensorRecords.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorRecords.m; sourceTree = "<group>"; };
 		077FB17925111B4F0002A716 /* AssetTelemetryTabController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTelemetryTabController.h; sourceTree = "<group>"; };
 		077FB17A25111B4F0002A716 /* AssetTelemetryTabController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetTelemetryTabController.m; sourceTree = "<group>"; };
 		077FB17C25111E680002A716 /* AssetTelemetryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTelemetryCell.h; sourceTree = "<group>"; };
@@ -240,14 +243,16 @@
 				073EB2E2250D59DC00DD007B /* SensorBattery.m */,
 				073EB2DE250D59CE00DD007B /* SensorControl.h */,
 				073EB2DF250D59CE00DD007B /* SensorControl.m */,
-				077FB17325104EA90002A716 /* SensorTelemetry.h */,
-				077FB17425104EA90002A716 /* SensorTelemetry.m */,
-				077FB1762510501D0002A716 /* SensorRecords.h */,
-				077FB1772510501D0002A716 /* SensorRecords.m */,
-				073EB2DB250D59BC00DD007B /* SensorInformation.h */,
-				073EB2DC250D59BC00DD007B /* SensorInformation.m */,
+				0761F763252D0B1400C0B446 /* SensorSurface.h */,
+				0761F764252D0B1400C0B446 /* SensorSurface.m */,
 				07A3F3BC25126887001BFFF1 /* SensorHandling.h */,
 				07A3F3BD25126887001BFFF1 /* SensorHandling.m */,
+				077FB17325104EA90002A716 /* SensorTelemetry.h */,
+				077FB17425104EA90002A716 /* SensorTelemetry.m */,
+				0761F767252D0B2900C0B446 /* SensorAtmosphere.h */,
+				0761F768252D0B2900C0B446 /* SensorAtmosphere.m */,
+				073EB2DB250D59BC00DD007B /* SensorInformation.h */,
+				073EB2DC250D59BC00DD007B /* SensorInformation.m */,
 			);
 			name = "Sensor Services";
 			sourceTree = "<group>";
@@ -328,7 +333,7 @@
 		073EB298250BF6CE00DD007B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1170;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = com.velvetwire;
 				TargetAttributes = {
 					073EB29F250BF6CE00DD007B = {
@@ -376,16 +381,17 @@
 				073EB2B9250BF6D000DD007B /* Application.m in Sources */,
 				073EB2D2250D40ED00DD007B /* AssetIdentifier.m in Sources */,
 				077FB17E25111E680002A716 /* AssetTelemetryCell.m in Sources */,
-				077FB1782510501D0002A716 /* SensorRecords.m in Sources */,
 				07A3F3BE25126887001BFFF1 /* SensorHandling.m in Sources */,
 				073EB2C7250C083600DD007B /* AssetListController.m in Sources */,
 				077FB170250EEC0A0002A716 /* AccountRegistrationViewController.m in Sources */,
+				0761F769252D0B2900C0B446 /* SensorAtmosphere.m in Sources */,
 				07930B1F2529207E00BC9C39 /* AssetRegistry.m in Sources */,
 				075C73FD25140BC400A0F5D7 /* BatteryControl.m in Sources */,
 				073EB2C2250BF8EE00DD007B /* AppSettings.m in Sources */,
 				073EB2D6250D583200DD007B /* AssetSensor.m in Sources */,
 				073EB2CA250C08D500DD007B /* AssetListCell.m in Sources */,
 				07930B24252A22B500BC9C39 /* AssetBroadcast.m in Sources */,
+				0761F765252D0B1400C0B446 /* SensorSurface.m in Sources */,
 				073EB2CF250D402400DD007B /* AssetTag.m in Sources */,
 				073EB2E3250D59DC00DD007B /* SensorBattery.m in Sources */,
 				077FB169250D9FA10002A716 /* AssetTrackingTabController.m in Sources */,
@@ -455,6 +461,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -513,6 +520,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

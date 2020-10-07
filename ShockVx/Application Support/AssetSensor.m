@@ -68,10 +68,10 @@
 
         if ( [service.UUID isEqual:[SensorInformation serviceIdentifier]] && self.information == nil ) [self setInformation:[SensorInformation serviceForPeripheral:peripheral delegate:self]];
 
+        if ( [service.UUID isEqual:[SensorAtmosphere serviceIdentifier]] && self.atmosphere == nil ) [self setAtmosphere:[SensorAtmosphere serviceForPeripheral:peripheral delegate:self]];
         if ( [service.UUID isEqual:[SensorTelemetry serviceIdentifier]] && self.telemetry == nil ) [self setTelemetry:[SensorTelemetry serviceForPeripheral:peripheral delegate:self]];
         if ( [service.UUID isEqual:[SensorHandling serviceIdentifier]] && self.handling == nil ) [self setHandling:[SensorHandling serviceForPeripheral:peripheral delegate:self]];
-        if ( [service.UUID isEqual:[SensorRecords serviceIdentifier]] && self.records == nil ) [self setRecords:[SensorRecords serviceForPeripheral:peripheral delegate:self]];
-
+        if ( [service.UUID isEqual:[SensorSurface serviceIdentifier]] && self.surface == nil ) [self setSurface:[SensorSurface serviceForPeripheral:peripheral delegate:self]];
 
         [peripheral discoverCharacteristics:nil forService:service];
     
@@ -89,9 +89,10 @@
 
         if ( [service.UUID isEqual:[SensorInformation serviceIdentifier]] ) [self.information discoveredCharacteristic:characteristic];
 
+        if ( [service.UUID isEqual:[SensorAtmosphere serviceIdentifier]] ) [self.atmosphere discoveredCharacteristic:characteristic];
         if ( [service.UUID isEqual:[SensorTelemetry serviceIdentifier]] ) [self.telemetry discoveredCharacteristic:characteristic];
         if ( [service.UUID isEqual:[SensorHandling serviceIdentifier]] ) [self.handling discoveredCharacteristic:characteristic];
-        if ( [service.UUID isEqual:[SensorRecords serviceIdentifier]] ) [self.records discoveredCharacteristic:characteristic];
+        if ( [service.UUID isEqual:[SensorSurface serviceIdentifier]] ) [self.surface discoveredCharacteristic:characteristic];
 
         // If the characteristic is notifying, enable notification. If the characteristic
         // can be read, read the characteristic.
@@ -111,9 +112,10 @@
 
     [self.information retrievedCharacteristic:characteristic];
 
-    [self.handling retrievedCharacteristic:characteristic];
+    [self.atmosphere retrievedCharacteristic:characteristic];
     [self.telemetry retrievedCharacteristic:characteristic];
-    [self.records retrievedCharacteristic:characteristic];
+    [self.handling retrievedCharacteristic:characteristic];
+    [self.surface retrievedCharacteristic:characteristic];
 
 }
 
@@ -207,6 +209,16 @@
 
 }
 
+#pragma mark - Information Delegate
+
+- (void) sensorInformation:(SensorInformation *)information {
+
+    // Send a notice that the sensor unit information has changed.
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationInformationUpdate object:self userInfo:@{@"information":self.information}];
+    
+}
+
 #pragma mark - Telemetry Delegate
 
 - (void) sensorTelemetry:(SensorTelemetry *)telemetry interval:(NSNumber *)interval {
@@ -217,27 +229,37 @@
 
 }
 
-- (void) sensorTelemetry:(SensorTelemetry *)telemetry {
+- (void) sensorTelemetry:(SensorTelemetry *)telemetry archival:(NSNumber *)archival {
 
-    // Send a notice that new telemetry data is available.
+    // Send a notice that the archival interval is known.
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationTelemetryValues object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationArchiveInterval object:self userInfo:@{@"interval":archival}];
 
 }
 
-- (void) sensorMinimumTelemetry:(SensorTelemetry *)telemetry {
+#pragma mark - Atmospherics Delegate
 
-    // Send a notice that telemetry minimums are known.
+- (void) sensorAtmosphere:(SensorAtmosphere *)atmosphere {
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationTelemetryLimits object:self userInfo:nil];
+    // Send a notice that new atmospheric data is available.
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationAtmosphericValues object:self userInfo:nil];
 
 }
 
-- (void) sensorMaximumTelemetry:(SensorTelemetry *)telemetry {
+- (void) sensorMinimumAtmosphere:(SensorAtmosphere *)atmosphere {
+    
+    // Send a notice that atmospheric minimums are known.
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationAtmosphericLimits object:self userInfo:nil];
 
+}
+
+- (void) sensorMaximumAtmosphere:(SensorAtmosphere *)atmosphere {
+    
     // Send a notice that telemetry maximums are known.
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationTelemetryLimits object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationAtmosphericLimits object:self userInfo:nil];
 
 }
 
@@ -259,24 +281,30 @@
 
 }
 
-#pragma mark - Records Delegate
+#pragma mark - Surface Temperature Delegate
 
-- (void) sensorRecords:(SensorRecords *)records interval:(NSNumber *)interval {
-
-    // Send a notice that the telemetry interval is known.
+- (void) sensorSurface:(SensorSurface *)surface {
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationRecordsInterval object:self userInfo:@{@"interval":interval}];
+    // Send a notice that new surface temperature data is available.
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationSurfaceValues object:self userInfo:nil];
 
 }
 
-#pragma mark - Information Delegate
-
-- (void) sensorInformation:(SensorInformation *)information {
-
-    // Send a notice that the sensor unit information has changed.
+- (void) sensorMinimumSurface:(SensorSurface *)surface {
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationInformationUpdate object:self userInfo:@{@"information":self.information}];
+    // Send a notice that surface temperature minimum i known.
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationSurfaceLimits object:self userInfo:nil];
+
+}
+
+- (void) sensorMaximumSurface:(SensorSurface *)surface {
+    
+    // Send a notice that surface temperature maximum is known.
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationSurfaceLimits object:self userInfo:nil];
+
 }
 
 @end

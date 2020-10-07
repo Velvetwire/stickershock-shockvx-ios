@@ -12,9 +12,10 @@
 
 #import "AssetIdentifier.h"
 
+#import "SensorAtmosphere.h"
 #import "SensorTelemetry.h"
 #import "SensorHandling.h"
-#import "SensorRecords.h"
+#import "SensorSurface.h"
 
 #define kSensorNotificationConnect                  @"sensorConnect"
 #define kSensorNotificationDropped                  @"sensorDropped"
@@ -30,20 +31,22 @@
 #define kSensorNotificationControlSettings          @"sensorControlSettings"
 
 #define kSensorNotificationTelemetryInterval        @"sensorTelemetryInterval"
-#define kSensorNotificationTelemetryValues          @"sensorTelemetryValues"
-#define kSensorNotificationTelemetryLimits          @"sensorTelemetryLimits"
+#define kSensorNotificationArchiveInterval          @"sensorArchiveInterval"
+
+#define kSensorNotificationAtmosphericValues        @"sensorAtmosphericValues"
+#define kSensorNotificationAtmosphericLimits        @"sensorAtmosphericLimits"
 
 #define kSensorNotificationHandlingValues           @"sensorHandlingValues"
 #define kSensorNotificationHandlingLimits           @"sensorHandlingLimits"
 
-#define kSensorNotificationTelemetryRecord          @"sensorTelemetryRecord"
-#define kSensorNotificationRecordsInterval          @"sensorRecordsInterval"
+#define kSensorNotificationSurfaceValues            @"sensorSurfaceValues"
+#define kSensorNotificationSurfaceLimits            @"sensorSurfaceLimits"
 
 @interface AssetSensor : NSObject
 
 <CBPeripheralDelegate, SensorAccessDelegate, SensorControlDelegate,
- SensorBatteryDelegate, SensorInformationDelegate, SensorRecordsDelegate,
- SensorTelemetryDelegate, SensorHandlingDelegate >
+ SensorBatteryDelegate, SensorInformationDelegate, SensorTelemetryDelegate,
+ SensorAtmosphereDelegate, SensorHandlingDelegate, SensorSurfaceDelegate >
 
 + (instancetype) sensorForPeripheral:(CBPeripheral *)peripheral withIdentifier:(AssetIdentifier *)identifier accessKey:(NSUUID *)key;
 
@@ -54,11 +57,12 @@
 
 @property (nonatomic, readonly) AssetIdentifier *   identifier;
 
+@property (nonatomic, strong)   SensorAtmosphere *  atmosphere;
 @property (nonatomic, strong)   SensorTelemetry *   telemetry;
 @property (nonatomic, strong)   SensorHandling *    handling;
-@property (nonatomic, strong)   SensorRecords *     records;
+@property (nonatomic, strong)   SensorSurface *     surface;
 
-- (bool) attachPeripheral:(CBPeripheral *)perihpheral toManager:(CBCentralManager *)manager;
+- (bool) attachPeripheral:(CBPeripheral *)peripheral toManager:(CBCentralManager *)manager;
 - (void) detachFromManager;
 
 @property (nonatomic, readonly) NSNumber *          signal;

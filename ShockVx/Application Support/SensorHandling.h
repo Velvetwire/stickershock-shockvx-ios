@@ -60,7 +60,7 @@ typedef NS_ENUM ( NSUInteger, OrientationFace ) {
 @property (nonatomic, strong)   NSNumber *      forceLimit;
 
 @property (readonly)            OrientationFace face;
-@property (nonatomic)           OrientationFace preferredFace;
+@property (nonatomic)           OrientationFace facePreferred;
 
 @end
 

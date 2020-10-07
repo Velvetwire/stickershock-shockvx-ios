@@ -70,7 +70,7 @@
             _angleLimit     = [NSNumber numberWithFloat:value->angle];
             _forceLimit     = [NSNumber numberWithFloat:value->force];
             
-            _preferredFace  = (OrientationFace) value->orientation;
+            _facePreferred  = (OrientationFace) value->orientation;
             
         }
 
@@ -120,9 +120,9 @@
 
 }
 
-- (void) setPreferredFace:(OrientationFace)face {
+- (void) setFacePreferred:(OrientationFace)face {
 
-    if ( face < kOrientationFaces ) {
+    if ( (_facePreferred = face) < kOrientationFaces ) {
     
         _limits.orientation = (unsigned char) face;
         NSData *    data    = [NSData dataWithBytes:&(_limits) length:sizeof(handling_values_t)];

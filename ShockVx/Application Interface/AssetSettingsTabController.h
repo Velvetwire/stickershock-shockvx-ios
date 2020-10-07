@@ -16,23 +16,23 @@
 #define kTelemetryIntervalFast  ((float) 15.0)
 #define kTelemetryIntervalSlow  ((float) 60.0)
 
-typedef NS_ENUM ( NSUInteger, MeasurementSetting ) {
+typedef NS_ENUM ( NSUInteger, TelemetrySetting ) {
 
-    kMeasurementSettingFast,
-    kMeasurementSettingSlow,
+    kTelemetrySettingFast,
+    kTelemetrySettingSlow,
     
 };
 
-// The telemetry recording interval can be either
+// The telemetry archive interval can be either
 // set to fast or slow.
 
-#define kRecordingIntervalFast  ((float) 900.0)
-#define kRecordingIntervalSlow  ((float) 3600.0)
+#define kArchiveIntervalFast    ((float) 900.0)
+#define kArchiveIntervalSlow    ((float) 3600.0)
 
-typedef NS_ENUM ( NSUInteger, RecordSetting ) {
+typedef NS_ENUM ( NSUInteger, ArchiveSetting ) {
 
-    kRecordSettingFast,
-    kRecordSettingSlow,
+    kArchiveSettingFast,
+    kArchiveSettingSlow,
     
 };
 
@@ -64,7 +64,7 @@ typedef NS_ENUM ( NSUInteger, PreferredOrientation ) {
 @property (nonatomic, weak)     AssetSensor *       sensor;
 
 @property (nonatomic, strong)   NSNumber *          telemetryInterval;
-@property (nonatomic, strong)   NSNumber *          recordingInterval;
+@property (nonatomic, strong)   NSNumber *          archiveInterval;
 
 @property (nonatomic, strong)   NSNumber *          surfaceMinimum;
 @property (nonatomic, strong)   NSNumber *          surfaceMaximum;

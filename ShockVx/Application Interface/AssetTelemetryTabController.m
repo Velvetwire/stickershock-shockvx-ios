@@ -34,27 +34,27 @@
 
     // Pre-load the surface metrics and limits from the sensor.
     
-    self.surface            = self.sensor.telemetry.surface;
-    self.surfaceMinimum     = self.sensor.telemetry.surfaceMinimum;
-    self.surfaceMaximum     = self.sensor.telemetry.surfaceMaximum;
+    self.surface            = self.sensor.surface.temperature;
+    self.surfaceMinimum     = self.sensor.surface.temperatureMinimum;
+    self.surfaceMaximum     = self.sensor.surface.temperatureMaximum;
     
     // Pre-load the ambient metrics and limits from the sensor.
 
-    self.ambient            = self.sensor.telemetry.ambient;
-    self.ambientMinimum     = self.sensor.telemetry.ambientMinimum;
-    self.ambientMaximum     = self.sensor.telemetry.ambientMaximum;
+    self.ambient            = self.sensor.atmosphere.ambient;
+    self.ambientMinimum     = self.sensor.atmosphere.ambientMinimum;
+    self.ambientMaximum     = self.sensor.atmosphere.ambientMaximum;
 
     // Pre-load the humidity metrics and limits from the sensor.
 
-    self.humidity           = self.sensor.telemetry.humidity;
-    self.humidityMinimum    = self.sensor.telemetry.humidityMinimum;
-    self.humidityMaximum    = self.sensor.telemetry.humidityMaximum;
+    self.humidity           = self.sensor.atmosphere.humidity;
+    self.humidityMinimum    = self.sensor.atmosphere.humidityMinimum;
+    self.humidityMaximum    = self.sensor.atmosphere.humidityMaximum;
 
     // Pre-load the pressure metrics and limits from the sensor.
 
-    self.pressure           = self.sensor.telemetry.pressure;
-    self.pressureMinimum    = self.sensor.telemetry.pressureMinimum;
-    self.pressureMaximum    = self.sensor.telemetry.pressureMaximum;
+    self.pressure           = self.sensor.atmosphere.pressure;
+    self.pressureMinimum    = self.sensor.atmosphere.pressureMinimum;
+    self.pressureMaximum    = self.sensor.atmosphere.pressureMaximum;
     
     // Pre-load the force metrics and limits from the sensor.
     

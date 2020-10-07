@@ -11,8 +11,8 @@
 
 @interface AssetSettingsTabController ( )
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *   measurementSettings;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *   recordSettings;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *   telemetrySettings;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *   archiveSettings;
 
 @property (weak, nonatomic) IBOutlet UISwitch *             surfaceEnable;
 @property (weak, nonatomic) IBOutlet UILabel *              minimumSurface;
@@ -53,25 +53,25 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     // If the telemetry and recording intervals are not yet known, disable
     // the respective selectors.
     
-    if ( !(self.telemetryInterval = self.sensor.telemetry.interval) ) [self.measurementSettings setEnabled:NO];
-    if ( !(self.recordingInterval = self.sensor.records.interval) ) [self.recordSettings setEnabled:NO];
+    if ( !(self.telemetryInterval = self.sensor.telemetry.interval) ) [self.telemetrySettings setEnabled:NO];
+    if ( !(self.archiveInterval = self.sensor.telemetry.archival) ) [self.archiveSettings setEnabled:NO];
     
     // If the surface temperature range values are not yet known, disable
     // the surface alarm enable switch.
     
-    if ( !(self.surfaceMinimum = self.sensor.telemetry.surfaceMinimum ) ) [self.surfaceEnable setEnabled:NO];
-    if ( !(self.surfaceMaximum = self.sensor.telemetry.surfaceMaximum ) ) [self.surfaceEnable setEnabled:NO];
+    if ( !(self.surfaceMinimum = self.sensor.surface.temperatureMinimum ) ) [self.surfaceEnable setEnabled:NO];
+    if ( !(self.surfaceMaximum = self.sensor.surface.temperatureMaximum ) ) [self.surfaceEnable setEnabled:NO];
 
     // If the ambient temperature range values are not yet known, disable
     // the ambient alarm enable switch.
     
-    if ( !(self.ambientMinimum = self.sensor.telemetry.ambientMinimum ) ) [self.ambientEnable setEnabled:NO];
-    if ( !(self.ambientMaximum = self.sensor.telemetry.ambientMaximum ) ) [self.ambientEnable setEnabled:NO];
+    if ( !(self.ambientMinimum = self.sensor.atmosphere.ambientMinimum ) ) [self.ambientEnable setEnabled:NO];
+    if ( !(self.ambientMaximum = self.sensor.atmosphere.ambientMaximum ) ) [self.ambientEnable setEnabled:NO];
 
     // If the angle limit is not yet known, disable the alarm switch.
     
-    if ( !(self.orientation = self.sensor.handling.preferredFace) ) [self.orientationSettings setEnabled:NO];
-    if ( !(self.angleMaximum = self.sensor.handling.angleLimit) ) [self.angleEnable setEnabled:NO];
+    //if ( !(self.orientation = self.sensor.handling.facePreferred) ) [self.orientationSettings setEnabled:NO];
+    //if ( !(self.angleMaximum = self.sensor.handling.angleLimit) ) [self.angleEnable setEnabled:NO];
     
     // If the force limit is not yet known, disable the care selector.
     
@@ -88,18 +88,18 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     
     if ( self.telemetryInterval ) {
     
-        if ( [self.telemetryInterval floatValue] >= kTelemetryIntervalSlow ) [self.measurementSettings setSelectedSegmentIndex:kMeasurementSettingSlow];
-        else [self.measurementSettings setSelectedSegmentIndex:kMeasurementSettingFast];
+        if ( [self.telemetryInterval floatValue] >= kTelemetryIntervalSlow ) [self.telemetrySettings setSelectedSegmentIndex:kTelemetrySettingSlow];
+        else [self.telemetrySettings setSelectedSegmentIndex:kTelemetrySettingFast];
             
     }
     
     // Update the recording interval selector settings if the interval
     // is known.
     
-    if ( self.recordingInterval ) {
+    if ( self.archiveInterval ) {
     
-        if ( [self.recordingInterval floatValue] >= kRecordingIntervalSlow ) [self.recordSettings setSelectedSegmentIndex:kRecordSettingSlow];
-        else [self.recordSettings setSelectedSegmentIndex:kRecordSettingFast];
+        if ( [self.archiveInterval floatValue] >= kArchiveIntervalSlow ) [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingSlow];
+        else [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingFast];
     
     }
     
@@ -213,8 +213,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     
     if ( [(UISwitch *)sender isOn] ) {
 
-        [self.sensor.telemetry setSurfaceMinimum:self.surfaceMinimum];
-        [self.sensor.telemetry setSurfaceMaximum:self.surfaceMaximum];
+        [self.sensor.surface setTemperatureMinimum:self.surfaceMinimum];
+        [self.sensor.surface setTemperatureMaximum:self.surfaceMaximum];
 
         [self.minimumSurface setText:[NSString stringWithFormat:temperatureFormat, [self.surfaceMinimum intValue]]];
         [self.minimumSurfaceStepper setValue:[self.surfaceMinimum integerValue]];
@@ -226,8 +226,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
 
     } else {
 
-        [self.sensor.telemetry setSurfaceMinimum:[NSNumber numberWithInteger:0]];
-        [self.sensor.telemetry setSurfaceMaximum:[NSNumber numberWithInteger:0]];
+        [self.sensor.surface setTemperatureMinimum:[NSNumber numberWithInteger:0]];
+        [self.sensor.surface setTemperatureMaximum:[NSNumber numberWithInteger:0]];
 
         [self.minimumSurface setText:@"--"];
         [self.minimumSurfaceStepper setEnabled:NO];
@@ -256,8 +256,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
                 
     }
     
-    [self.sensor.telemetry setSurfaceMinimum:self.surfaceMinimum];
-    [self.sensor.telemetry setSurfaceMaximum:self.surfaceMaximum];
+    [self.sensor.surface setTemperatureMinimum:self.surfaceMinimum];
+    [self.sensor.surface setTemperatureMaximum:self.surfaceMaximum];
 
 }
 
@@ -278,8 +278,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
 
     }
 
-    [self.sensor.telemetry setSurfaceMinimum:self.surfaceMinimum];
-    [self.sensor.telemetry setSurfaceMaximum:self.surfaceMaximum];
+    [self.sensor.surface setTemperatureMinimum:self.surfaceMinimum];
+    [self.sensor.surface setTemperatureMaximum:self.surfaceMaximum];
 
 }
 
@@ -347,8 +347,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     
     if ( [(UISwitch *)sender isOn] ) {
 
-        [self.sensor.telemetry setAmbientMinimum:self.ambientMinimum];
-        [self.sensor.telemetry setAmbientMaximum:self.ambientMaximum];
+        [self.sensor.atmosphere setAmbientMinimum:self.ambientMinimum];
+        [self.sensor.atmosphere setAmbientMaximum:self.ambientMaximum];
 
         [self.minimumAmbient setText:[NSString stringWithFormat:temperatureFormat, [self.ambientMinimum intValue]]];
         [self.minimumAmbientStepper setValue:[self.ambientMinimum integerValue]];
@@ -360,8 +360,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
 
     } else {
 
-        [self.sensor.telemetry setAmbientMinimum:[NSNumber numberWithInteger:0]];
-        [self.sensor.telemetry setAmbientMaximum:[NSNumber numberWithInteger:0]];
+        [self.sensor.atmosphere setAmbientMinimum:[NSNumber numberWithInteger:0]];
+        [self.sensor.atmosphere setAmbientMaximum:[NSNumber numberWithInteger:0]];
 
         [self.minimumAmbient setText:@"--"];
         [self.minimumAmbientStepper setEnabled:NO];
@@ -390,8 +390,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     
     }
 
-    [self.sensor.telemetry setAmbientMinimum:self.ambientMinimum];
-    [self.sensor.telemetry setAmbientMaximum:self.ambientMaximum];
+    [self.sensor.atmosphere setAmbientMinimum:self.ambientMinimum];
+    [self.sensor.atmosphere setAmbientMaximum:self.ambientMaximum];
 
 }
 
@@ -412,8 +412,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     
     }
 
-    [self.sensor.telemetry setAmbientMinimum:self.ambientMinimum];
-    [self.sensor.telemetry setAmbientMaximum:self.ambientMaximum];
+    [self.sensor.atmosphere setAmbientMinimum:self.ambientMinimum];
+    [self.sensor.atmosphere setAmbientMaximum:self.ambientMaximum];
     
 }
 
@@ -484,7 +484,7 @@ static  NSString *      angleFormat         = @"%i \u00b0";
             
     }
     
-    [self.sensor.handling setPreferredFace:self.orientation];
+    [self.sensor.handling setFacePreferred:self.orientation];
 
 }
 
@@ -569,13 +569,13 @@ static  NSString *      angleFormat         = @"%i \u00b0";
 
 }
 
-#pragma mark - Telemetry Interval
+#pragma mark - Telemetry Measurement and Archive Intervals
 
 - (IBAction) telemetryIntervalSelected:(id)sender {
 
     NSUInteger  index   = [(UISegmentedControl *)sender selectedSegmentIndex];
     
-    if ( index == kMeasurementSettingSlow ) { _telemetryInterval = [NSNumber numberWithFloat:kTelemetryIntervalSlow]; }
+    if ( index == kTelemetrySettingSlow ) { _telemetryInterval = [NSNumber numberWithFloat:kTelemetryIntervalSlow]; }
     else { _telemetryInterval = [NSNumber numberWithFloat:kTelemetryIntervalFast]; }
     
     [self.sensor.telemetry setInterval:self.telemetryInterval];
@@ -586,36 +586,34 @@ static  NSString *      angleFormat         = @"%i \u00b0";
 
     if ( (_telemetryInterval = interval) ) {
 
-        if ( [interval floatValue] >= kTelemetryIntervalSlow ) [self.measurementSettings setSelectedSegmentIndex:kMeasurementSettingSlow];
-        else [self.measurementSettings setSelectedSegmentIndex:kMeasurementSettingFast];
+        if ( [interval floatValue] >= kTelemetryIntervalSlow ) [self.telemetrySettings setSelectedSegmentIndex:kTelemetrySettingSlow];
+        else [self.telemetrySettings setSelectedSegmentIndex:kTelemetrySettingFast];
         
-        [self.measurementSettings setEnabled:YES];
+        [self.telemetrySettings setEnabled:YES];
         
     }
 
 }
 
-#pragma mark - Recording Interval
-
-- (IBAction) recordingIntervalSelected:(id)sender {
+- (IBAction) archiveIntervalSelected:(id)sender {
 
     NSUInteger  index   = [(UISegmentedControl *)sender selectedSegmentIndex];
     
-    if ( index == kRecordSettingSlow ) { _recordingInterval = [NSNumber numberWithFloat:kRecordingIntervalSlow]; }
-    else { _recordingInterval = [NSNumber numberWithFloat:kRecordingIntervalFast]; }
+    if ( index == kArchiveSettingSlow ) { _archiveInterval = [NSNumber numberWithFloat:kArchiveIntervalSlow]; }
+    else { _archiveInterval = [NSNumber numberWithFloat:kArchiveIntervalFast]; }
     
-    [self.sensor.records setInterval:self.recordingInterval];
+    [self.sensor.telemetry setArchival:self.archiveInterval];
     
 }
 
-- (void) setRecordingInterval:(NSNumber *)interval {
+- (void) setArchiveInterval:(NSNumber *)interval {
 
-    if ( (_recordingInterval = interval) ) {
+    if ( (_archiveInterval = interval) ) {
 
-        if ( [interval floatValue] >= kRecordingIntervalSlow ) [self.recordSettings setSelectedSegmentIndex:kRecordSettingSlow];
-        else [self.recordSettings setSelectedSegmentIndex:kRecordSettingFast];
+        if ( [interval floatValue] >= kArchiveIntervalSlow ) [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingSlow];
+        else [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingFast];
 
-        [self.recordSettings setEnabled:YES];
+        [self.archiveSettings setEnabled:YES];
         
     }
 

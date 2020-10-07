@@ -14,24 +14,10 @@
 
 #define kSensorTelemetryServiceUUID     @"54650000-5657-5353-2020-56454C564554"
 
-// Telemetry values and limits characteristics
-
-#define kSensorTelemetryValueUUID       @"54654D76-5657-5353-2020-56454C564554"
-#define kSensorTelemetryLowerUUID       @"54654C6C-5657-5353-2020-56454C564554"
-#define kSensorTelemetryUpperUUID       @"5465556C-5657-5353-2020-56454C564554"
-
-typedef struct __attribute__ (( packed )) {
-
-    float       surface;                // Surface temperature (deg C)
-    float       ambient;                // Ambient temperature (deg C)
-    float       humidity;               // Humidity (saturation)
-    float       pressure;               // Air pressure (bars)
-
-} telemetry_values_t;
-
-// Telemetry interval setting
+// Telemetry interval settings
 
 #define kSensorTelemetryIntervalUUID    @"54654D69-5657-5353-2020-56454C564554"
+#define kSensorTelemetryArchivalUUID    @"54654169-5657-5353-2020-56454C564554"
 
 //
 // Sensor telemetry service
@@ -44,22 +30,7 @@ typedef struct __attribute__ (( packed )) {
 - (void) retrievedCharacteristic:(CBCharacteristic *)characteristic;
 
 @property (nonatomic, strong)   NSNumber *      interval;
-
-@property (readonly, strong)    NSNumber *      pressure;
-@property (nonatomic, strong)   NSNumber *      pressureMinimum;
-@property (nonatomic, strong)   NSNumber *      pressureMaximum;
-
-@property (readonly, strong)    NSNumber *      humidity;
-@property (nonatomic, strong)   NSNumber *      humidityMinimum;
-@property (nonatomic, strong)   NSNumber *      humidityMaximum;
-
-@property (readonly, strong)    NSNumber *      ambient;
-@property (nonatomic, strong)   NSNumber *      ambientMinimum;
-@property (nonatomic, strong)   NSNumber *      ambientMaximum;
-
-@property (readonly, strong)    NSNumber *      surface;
-@property (nonatomic, strong)   NSNumber *      surfaceMinimum;
-@property (nonatomic, strong)   NSNumber *      surfaceMaximum;
+@property (nonatomic, strong)   NSNumber *      archival;
 
 @end
 
@@ -67,10 +38,7 @@ typedef struct __attribute__ (( packed )) {
 // Sensor telemetry delegate
 @protocol SensorTelemetryDelegate <NSObject>
 
-- (void) sensorTelemetry:(SensorTelemetry *)telemetry;
 - (void) sensorTelemetry:(SensorTelemetry *)telemetry interval:(NSNumber *)interval;
-
-- (void) sensorMinimumTelemetry:(SensorTelemetry *)telemetry;
-- (void) sensorMaximumTelemetry:(SensorTelemetry *)telemetry;
+- (void) sensorTelemetry:(SensorTelemetry *)telemetry archival:(NSNumber *)archival;
 
 @end

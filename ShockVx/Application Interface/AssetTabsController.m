@@ -38,13 +38,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateControl:) name:kSensorNotificationControlSettings object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetTelemetryInterval:) name:kSensorNotificationTelemetryInterval object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetTelemetryLimits:) name:kSensorNotificationTelemetryLimits object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetTelemetryValues:) name:kSensorNotificationTelemetryValues object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetArchiveInterval:) name:kSensorNotificationArchiveInterval object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetAtmosphericLimits:) name:kSensorNotificationAtmosphericLimits object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetAtmosphericValues:) name:kSensorNotificationAtmosphericValues object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetHandlingLimits:) name:kSensorNotificationHandlingLimits object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetHandlingValues:) name:kSensorNotificationHandlingValues object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetRecordingInterval:) name:kSensorNotificationRecordsInterval object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetSurfaceLimits:) name:kSensorNotificationSurfaceLimits object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetSurfaceValues:) name:kSensorNotificationSurfaceValues object:nil];
 
 }
 
@@ -178,7 +179,7 @@
 
 }
 
-#pragma mark - Sensor Telemetry
+#pragma mark - Sensor Telemetry Settings
 
 - (void) didGetTelemetryInterval:(NSNotification *)notification {
 
@@ -193,56 +194,55 @@
 
 }
 
-- (void) didGetTelemetryLimits:(NSNotification *)notification {
+- (void) didGetArchiveInterval:(NSNotification *)notification {
+
+    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    NSNumber *              interval     = (NSNumber *) [notification.userInfo objectForKey:@"interval"];
+
+    if ( [sensor isEqual:self.sensor] ) {
+
+        [self.settingsController setArchiveInterval:interval];
+        
+    }
+
+}
+
+#pragma mark - Sensor Atmospherics
+
+- (void) didGetAtmosphericLimits:(NSNotification *)notification {
 
     AssetSensor *           sensor      = (AssetSensor *) notification.object;
 
     if ( [self.sensor isEqual:sensor] ) {
     
-        // If an air pressure range has been defined, submit the limits.
+        [self.telemetryController setAmbientMinimum:sensor.atmosphere.ambientMinimum];
+        [self.telemetryController setAmbientMaximum:sensor.atmosphere.ambientMaximum];
+        [self.settingsController setAmbientMinimum:sensor.atmosphere.ambientMinimum];
+        [self.settingsController setAmbientMaximum:sensor.atmosphere.ambientMaximum];
 
-        [self.telemetryController setPressureMinimum:sensor.telemetry.pressureMinimum];
-        [self.telemetryController setPressureMaximum:sensor.telemetry.pressureMaximum];
-        [self.settingsController setPressureMinimum:sensor.telemetry.pressureMinimum];
-        [self.settingsController setPressureMaximum:sensor.telemetry.pressureMaximum];
+        [self.telemetryController setHumidityMinimum:sensor.atmosphere.humidityMinimum];
+        [self.telemetryController setHumidityMaximum:sensor.atmosphere.humidityMaximum];
+        [self.settingsController setHumidityMinimum:sensor.atmosphere.humidityMinimum];
+        [self.settingsController setHumidityMaximum:sensor.atmosphere.humidityMaximum];
 
-        // If a relative humidity range has been defined, submit the limits.
-
-        [self.telemetryController setHumidityMinimum:sensor.telemetry.humidityMinimum];
-        [self.telemetryController setHumidityMaximum:sensor.telemetry.humidityMaximum];
-        [self.settingsController setHumidityMinimum:sensor.telemetry.humidityMinimum];
-        [self.settingsController setHumidityMaximum:sensor.telemetry.humidityMaximum];
-
-        // If an ambient temperature range has been defined, submit the limits.
-
-        [self.telemetryController setAmbientMinimum:sensor.telemetry.ambientMinimum];
-        [self.telemetryController setAmbientMaximum:sensor.telemetry.ambientMaximum];
-        [self.settingsController setAmbientMinimum:sensor.telemetry.ambientMinimum];
-        [self.settingsController setAmbientMaximum:sensor.telemetry.ambientMaximum];
-
-        // If a surface temperature range has been defined, submit the limits.
-
-        [self.telemetryController setSurfaceMinimum:sensor.telemetry.surfaceMinimum];
-        [self.telemetryController setSurfaceMaximum:sensor.telemetry.surfaceMaximum];
-        [self.settingsController setSurfaceMinimum:sensor.telemetry.surfaceMinimum];
-        [self.settingsController setSurfaceMaximum:sensor.telemetry.surfaceMaximum];
+        [self.telemetryController setPressureMinimum:sensor.atmosphere.pressureMinimum];
+        [self.telemetryController setPressureMaximum:sensor.atmosphere.pressureMaximum];
+        [self.settingsController setPressureMinimum:sensor.atmosphere.pressureMinimum];
+        [self.settingsController setPressureMaximum:sensor.atmosphere.pressureMaximum];
 
     }
 
 }
 
-- (void) didGetTelemetryValues:(NSNotification *)notification {
+- (void) didGetAtmosphericValues:(NSNotification *)notification {
 
     AssetSensor *           sensor      = (AssetSensor *) notification.object;
 
     if ( [self.sensor isEqual:sensor] ) {
 
-        // Update the telemetry values
-        
-        [self.telemetryController setPressure:sensor.telemetry.pressure];
-        [self.telemetryController setHumidity:sensor.telemetry.humidity];
-        [self.telemetryController setAmbient:sensor.telemetry.ambient];
-        [self.telemetryController setSurface:sensor.telemetry.surface];
+        [self.telemetryController setAmbient:sensor.atmosphere.ambient];
+        [self.telemetryController setHumidity:sensor.atmosphere.humidity];
+        [self.telemetryController setPressure:sensor.atmosphere.pressure];
 
     }
 
@@ -259,7 +259,7 @@
         [self.telemetryController setAngleMaximum:sensor.handling.angleLimit];
         [self.telemetryController setForceMaximum:sensor.handling.forceLimit];
 
-        [self.settingsController setOrientation:sensor.handling.preferredFace];
+        [self.settingsController setOrientation:sensor.handling.facePreferred];
         [self.settingsController setAngleMaximum:sensor.handling.angleLimit];
         [self.settingsController setForceMaximum:sensor.handling.forceLimit];
         
@@ -281,17 +281,32 @@
 
 }
 
-#pragma mark - Sensor Records
 
-- (void) didGetRecordingInterval:(NSNotification *)notification {
+#pragma mark - Sensor Surface Readings
+
+- (void) didGetSurfaceLimits:(NSNotification *)notification {
 
     AssetSensor *           sensor      = (AssetSensor *) notification.object;
-    NSNumber *              interval     = (NSNumber *) [notification.userInfo objectForKey:@"interval"];
 
-    if ( [sensor isEqual:self.sensor] ) {
+    if ( [self.sensor isEqual:sensor] ) {
+   
+        [self.telemetryController setSurfaceMinimum:sensor.surface.temperatureMinimum];
+        [self.telemetryController setSurfaceMaximum:sensor.surface.temperatureMaximum];
+        [self.settingsController setSurfaceMinimum:sensor.surface.temperatureMinimum];
+        [self.settingsController setSurfaceMaximum:sensor.surface.temperatureMaximum];
 
-        [self.settingsController setRecordingInterval:interval];
-        
+    }
+
+}
+
+- (void) didGetSurfaceValues:(NSNotification *)notification {
+
+    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+
+    if ( [self.sensor isEqual:sensor] ) {
+
+        [self.telemetryController setSurface:sensor.surface.temperature];
+
     }
 
 }
