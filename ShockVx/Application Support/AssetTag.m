@@ -56,7 +56,7 @@
 
 - (void) readerSessionDidBecomeActive:(NFCNDEFReaderSession *)session {
 
-    NSLog ( @"Scan session active." );
+    [self setElement:nil];
     
 }
 

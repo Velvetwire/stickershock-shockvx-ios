@@ -9,17 +9,27 @@
 
 #import "AppDelegate.h"
 #import "AssetTabsController.h"
-#import "AssetSettingsTabController.h"
-#import "AssetTrackingTabController.h"
-#import "AssetTelemetryTabController.h"
 
-@interface AssetTabsController ( )
+//
+// Connected sensor tab controller instance
+//
 
-@property (nonatomic, weak) AssetSettingsTabController *    settingsController;
-@property (nonatomic, weak) AssetTrackingTabController *    trackingController;
-@property (nonatomic, weak) AssetTelemetryTabController *   telemetryController;
+@interface AssetTabsController ( ) <CLLocationManagerDelegate>
+
+@property (nonatomic, weak)     AssetSettingsTabController *    settingsController;
+@property (nonatomic, weak)     AssetTrackingTabController *    trackingController;
+@property (nonatomic, weak)     AssetTelemetryTabController *   telemetryController;
+
+@property (nonatomic, strong)   NSString *                      unwindSegue;
+
+@property (nonatomic, strong)   CLLocationManager *             locationManager;
+@property (nonatomic, strong)   CLLocation *                    locationFix;
 
 @end
+
+//
+// Connected sensor tab controller interface
+//
 
 @implementation AssetTabsController
 
@@ -27,26 +37,85 @@
 
     [super viewDidLoad];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDropConnection:) name:kSensorNotificationDropped object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didMeasureSignal:) name:kSensorNotificationSignalUpdate object:nil];
+    // If location services are available, register the location manager.
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRespondToAccess:) name:kSensorNotificationAccessResponse object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRestrictAccess:) name:kSensorNotificationAccessRestricted object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAllowAccess:) name:kSensorNotificationAccessUnlocked object:nil];
+    if ( [CLLocationManager locationServicesEnabled] ) { _locationManager = [[CLLocationManager alloc] init]; }
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateInformation:) name:kSensorNotificationInformationUpdate object:nil];
+    // Register for connection notices
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didMeasureSignal:) name:kDeviceNotificationSignal object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDropConnection:) name:kDeviceNotificationDropped object:nil];
+
+    // Register for security access notices
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRestrictAccess:) name:kDeviceNotificationAccessRestricted object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRespondToAccess:) name:kDeviceNotificationAccessResponse object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAllowAccess:) name:kDeviceNotificationAccessUnlocked object:nil];
+
+    // Register for device information and control notices
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateInformation:) name:kDeviceNotificationInformation object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateControl:) name:kSensorNotificationControlSettings object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetTelemetryInterval:) name:kSensorNotificationTelemetryInterval object:nil];
+    
+    // Register for telemetry settings updates
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetTelemetryInterval:) name:kSensorNotificationMeasureInterval object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetArchiveInterval:) name:kSensorNotificationArchiveInterval object:nil];
 
+    // Register for atmospheric telmetry updates
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetAtmosphericLimits:) name:kSensorNotificationAtmosphericLimits object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetAtmosphericValues:) name:kSensorNotificationAtmosphericValues object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetHandlingLimits:) name:kSensorNotificationHandlingLimits object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetHandlingValues:) name:kSensorNotificationHandlingValues object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetSurfaceLimits:) name:kSensorNotificationSurfaceLimits object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetSurfaceValues:) name:kSensorNotificationSurfaceValues object:nil];
 
+    // Register for handling updates
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetHandlingLimits:) name:kSensorNotificationHandlingLimits object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetHandlingValues:) name:kSensorNotificationHandlingValues object:nil];
+
+    // Prepare each of the tab controllers
+    
+    [self viewPrepareControllers];
+        
+}
+
+- (void) viewPrepareControllers {
+
+    // Assign this controller as the delegate for each of the tab controllers
+    // that support a delegate reference.
+    
+    for ( UIViewController * controller in self.viewControllers ) {
+    
+        if ( [controller isKindOfClass:[AssetSettingsTabController class]] ) { [(AssetSettingsTabController *)controller setDelegate:self]; }
+        if ( [controller isKindOfClass:[AssetTrackingTabController class]] ) { [(AssetTrackingTabController *)controller setDelegate:self]; }
+
+    }
+
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+
+    [super viewDidAppear:animated];
+    
+    if ( self.locationManager ) {
+    
+        [self.locationManager setDelegate:self];
+    
+        switch ( [self.locationManager authorizationStatus] ) {
+            case kCLAuthorizationStatusAuthorizedWhenInUse:
+            case kCLAuthorizationStatusAuthorizedAlways:
+                [self.locationManager requestLocation];
+                break;
+            
+            default:
+                [self.locationManager requestWhenInUseAuthorization];
+                break;
+                
+        }
+        
+    }
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -70,15 +139,15 @@
 
     [super viewWillDisappear:animated];
     
-    if (self.isMovingFromParentViewController) { [self.sensor detachFromManager]; }
+    if ( self.isMovingFromParentViewController) { [self.sensor detachFromManager]; }
     
 }
 
-#pragma mark - Asychronous Notifications
+#pragma mark - Asychronous connection notifications
 
 - (void) didMeasureSignal:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
     NSNumber *              signal      = [notification.userInfo objectForKey:@"signal"];
     
     // If this sensor has been dropped, unwind...
@@ -94,32 +163,39 @@
 
 - (void) didDropConnection:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
 
     // If this sensor has been dropped, unwind...
     
-    if ( [self.sensor isEqual:sensor] ) { [self performSegueWithIdentifier:@"unwindConnection" sender:self]; }
+    if ( [self.sensor isEqual:sensor] ) {
+        
+        if ( self.unwindSegue ) [self performSegueWithIdentifier:self.unwindSegue sender:self];
+        else  [self performSegueWithIdentifier:@"lostConnection" sender:self];
+        
+    }
 
 }
 
+#pragma mark - Asynchronous security access notifications
+
 - (void) didRespondToAccess:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
     NSNumber *              response    = [notification.userInfo objectForKey:@"response"];
 
     // Make sure that this update is intended for this sensor instance
     
     if ( [self.sensor isEqual:sensor] ) {
 
-        NSLog ( @"Access response %i", [response intValue] );
-
+        // NOTE: placeholder
+        
     }
     
 }
 
 - (void) didRestrictAccess:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
 
     // Make sure that this update is intended for this sensor instance
     
@@ -133,7 +209,7 @@
 
 - (void) didAllowAccess:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
 
     // Make sure that this update is intended for this sensor instance
     
@@ -145,9 +221,11 @@
 
 }
 
+#pragma mark - Device control notices
+
 - (void) didUpdateControl:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
     SensorControl *         control     = (SensorControl *) [notification.userInfo objectForKey:@"control"];
     
     // Make sure that this update is intended for this sensor instance
@@ -161,12 +239,12 @@
     
 }
 
-#pragma mark - Sensor Information
+#pragma mark - Sensor information notices
 
 - (void) didUpdateInformation:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
-    SensorInformation *     information = (SensorInformation *) [notification.userInfo objectForKey:@"information"];
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
+    DeviceInformation *     information = (DeviceInformation *) [notification.userInfo objectForKey:@"information"];
     
     // Make sure that this update is intended for this sensor instance
     // and update the information.
@@ -174,17 +252,18 @@
     if ( [self.sensor isEqual:sensor] ) {
     
         [self.trackingController setAssetNumber:information.number];
+        [self.settingsController refreshInformation];
         
     }
 
 }
 
-#pragma mark - Sensor Telemetry Settings
+#pragma mark - Sensor telemetry notices
 
 - (void) didGetTelemetryInterval:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
-    NSNumber *              interval     = (NSNumber *) [notification.userInfo objectForKey:@"interval"];
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
+    NSNumber *              interval    = (NSNumber *) [notification.userInfo objectForKey:@"interval"];
 
     if ( [sensor isEqual:self.sensor] ) {
 
@@ -196,8 +275,8 @@
 
 - (void) didGetArchiveInterval:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
-    NSNumber *              interval     = (NSNumber *) [notification.userInfo objectForKey:@"interval"];
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
+    NSNumber *              interval    = (NSNumber *) [notification.userInfo objectForKey:@"interval"];
 
     if ( [sensor isEqual:self.sensor] ) {
 
@@ -207,11 +286,11 @@
 
 }
 
-#pragma mark - Sensor Atmospherics
+#pragma mark - Sensor atmospheric notices
 
 - (void) didGetAtmosphericLimits:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
 
     if ( [self.sensor isEqual:sensor] ) {
     
@@ -236,7 +315,7 @@
 
 - (void) didGetAtmosphericValues:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
 
     if ( [self.sensor isEqual:sensor] ) {
 
@@ -248,11 +327,11 @@
 
 }
 
-#pragma mark - Sensor Handling
+#pragma mark - Sensor handling notices
 
 - (void) didGetHandlingLimits:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
 
     if ( [self.sensor isEqual:sensor] ) {
 
@@ -269,7 +348,7 @@
 
 - (void) didGetHandlingValues:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
 
     if ( [self.sensor isEqual:sensor] ) {
 
@@ -282,11 +361,11 @@
 }
 
 
-#pragma mark - Sensor Surface Readings
+#pragma mark - Sensor surface readings
 
 - (void) didGetSurfaceLimits:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
 
     if ( [self.sensor isEqual:sensor] ) {
    
@@ -301,7 +380,7 @@
 
 - (void) didGetSurfaceValues:(NSNotification *)notification {
 
-    AssetSensor *           sensor      = (AssetSensor *) notification.object;
+    SensorDevice *          sensor      = (SensorDevice *) notification.object;
 
     if ( [self.sensor isEqual:sensor] ) {
 
@@ -311,7 +390,7 @@
 
 }
 
-#pragma mark - Asset Values
+#pragma mark - Asset values
 
 @synthesize assetDescription = _assetDescription;
 @synthesize assetLocale = _assetLocale;
@@ -322,5 +401,62 @@
 
 - (void) setAssetLocale:(NSString *)locale { [self.trackingController setAssetLocale:(_assetLocale = locale)]; }
 - (NSString *) assetLocale { return (_assetLocale = [self.trackingController assetLocale]); }
+
+#pragma mark - Asset tracking delegate
+
+- (void) assetTrackingOpened { [self setUnwindSegue:@"closeConnection"]; }
+- (void) assetTrackingClosed { [self setUnwindSegue:@"closeConnection"]; }
+
+#pragma mark - Asset settings delegate
+
+- (void) assetSettingsUpdate { [self setUnwindSegue:@"resetConnection"]; }
+
+#pragma mark - Location manager delegate
+
+- (void) locationManagerDidChangeAuthorization:(CLLocationManager *)manager {
+
+    switch ( manager.authorizationStatus ) {
+    
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+        case kCLAuthorizationStatusAuthorizedAlways:
+            [self.locationManager requestLocation];
+            break;
+            
+        default:
+            NSLog ( @"Location not authorized!" );
+            break;
+            
+    }
+    
+}
+
+- (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+
+    if ( (_locationFix = [locations firstObject]) ) {
+
+        CLGeocoder *    geocoder    = [[CLGeocoder alloc] init];
+        
+        [geocoder reverseGeocodeLocation:self.locationFix
+                       completionHandler:^(NSArray * placemarks, NSError * error) { [self locationManager:manager didGeolocatePlaces:placemarks]; }];
+    
+        [self.trackingController setLocation:self.locationFix];
+        
+    }
+    
+}
+
+- (void) locationManager:(CLLocationManager *)manager didGeolocatePlaces:(NSArray *)places {
+
+    CLPlacemark *       placemark   = [places firstObject];
+    
+    [self.trackingController setPlacemark:placemark];
+    
+}
+
+- (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+
+    // NOTE: problem gathering location
+    
+}
 
 @end

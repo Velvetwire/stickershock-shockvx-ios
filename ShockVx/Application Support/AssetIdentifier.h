@@ -24,6 +24,7 @@
 + (instancetype) identifierWithString:(NSString *)string;
 
 - (bool) matchesIdentifier:(AssetIdentifier *)identifier;
+- (bool) matchesData:(NSData *)data;
 
 - (NSString *) identifierString;
 - (NSData *) identifierData;

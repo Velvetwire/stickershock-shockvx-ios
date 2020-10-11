@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Shock Vx</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,13 +19,17 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NFCReaderUsageDescription</key>
 	<string>NFC is required to scan Stickershock sensor identification codes</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Bluetooth is required to communicate with Stickershock sensors</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This app connects with Stickershock sensors via Bluetooth</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location services can be used to tag asset location automatically.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

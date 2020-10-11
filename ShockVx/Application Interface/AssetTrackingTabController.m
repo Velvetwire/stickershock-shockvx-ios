@@ -30,6 +30,8 @@
 
 @property (nonatomic, weak) IBOutlet    UITextField *       descriptionField;
 @property (nonatomic, weak) IBOutlet    UITextField *       locationField;
+@property (nonatomic, weak) IBOutlet    UIButton *          locationReset;
+@property (nonatomic, strong )          NSString *          locationName;
 
 @property (nonatomic, weak) IBOutlet    UIButton *          actionButton;
 
@@ -69,6 +71,44 @@
 
     if ( self.assetDescription ) [self.descriptionField setText:self.assetDescription];
     if ( self.assetLocale ) [self.locationField setText:self.assetLocale];
+    
+}
+
+#pragma mark - Current location information
+
+- (void) setLocation:(CLLocation *)location {
+
+    dispatch_async( dispatch_get_main_queue( ), ^{ [self.locationReset setEnabled:YES]; });
+    
+}
+
+- (void) setPlacemark:(CLPlacemark *)placemark {
+ 
+    NSMutableString *   address = [[NSMutableString alloc] initWithString:placemark.thoroughfare];
+    
+    if ( placemark.subLocality ) [address appendString:[NSString stringWithFormat:@", %@", placemark.subLocality]];
+    if ( placemark.locality ) [address appendString:[NSString stringWithFormat:@" %@", placemark.locality]];
+    
+    if ( placemark.administrativeArea ) [address appendString:[NSString stringWithFormat:@", %@", placemark.administrativeArea]];
+    if ( placemark.ISOcountryCode ) [address appendString:[NSString stringWithFormat:@" (%@)", placemark.ISOcountryCode]];
+
+    if ( (_locationName = address) ) {
+    
+        if ( ! [self.locationField.text length] ) dispatch_async( dispatch_get_main_queue( ), ^{
+            if ( ![self.locationField isEditing] ) [self.locationField setText:self.locationName];
+        });
+    
+    }
+    
+}
+
+- (IBAction) locationReset:(id)sender {
+
+    if ( self.locationName ) {
+    
+        if ( ! [self.locationField isEditing] ) [self.locationField setText:self.locationName];
+    
+    }
     
 }
 
@@ -185,15 +225,17 @@
 - (IBAction) pressAction:(id)sender {
     
     if ( self.dateClosed ) {
-      
+        
         [self.sensor.access requestErase];
         
     } else if ( self.dateOpened ) {
         
+        if ( self.delegate ) [self.delegate assetTrackingClosed];
         [self.sensor.control closeUsingIdentifier:self.settings.userCode];
         
     } else {
         
+        if ( self.delegate ) [self.delegate assetTrackingOpened];
         [self.sensor.control openUsingIdentifier:self.settings.userCode];
         
     }

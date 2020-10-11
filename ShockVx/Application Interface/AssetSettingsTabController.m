@@ -33,6 +33,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *              angleLimit;
 @property (weak, nonatomic) IBOutlet UIStepper *            angleStepper;
 
+@property (weak, nonatomic) IBOutlet UILabel *              deviceMake;
+@property (weak, nonatomic) IBOutlet UILabel *              deviceModel;
+@property (weak, nonatomic) IBOutlet UILabel *              deviceVersion;
+@property (weak, nonatomic) IBOutlet UILabel *              deviceFirmware;
+@property (weak, nonatomic) IBOutlet UIButton *             deviceUpdate;
+
 @end
 
 @implementation AssetSettingsTabController
@@ -68,14 +74,13 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     if ( !(self.ambientMinimum = self.sensor.atmosphere.ambientMinimum ) ) [self.ambientEnable setEnabled:NO];
     if ( !(self.ambientMaximum = self.sensor.atmosphere.ambientMaximum ) ) [self.ambientEnable setEnabled:NO];
 
-    // If the angle limit is not yet known, disable the alarm switch.
-    
-    //if ( !(self.orientation = self.sensor.handling.facePreferred) ) [self.orientationSettings setEnabled:NO];
-    //if ( !(self.angleMaximum = self.sensor.handling.angleLimit) ) [self.angleEnable setEnabled:NO];
-    
     // If the force limit is not yet known, disable the care selector.
     
     if ( !(self.forceMaximum = self.sensor.handling.forceLimit) ) [self.careSettings setEnabled:NO];
+    
+    // Refresh the device information
+    
+    [self refreshInformation];
     
 }
 
@@ -153,8 +158,6 @@ static  NSString *      angleFormat         = @"%i \u00b0";
         [self.maximumAmbient setText:@"--"];
         [self.maximumAmbientStepper setEnabled:NO];
 
-        //[self.ambientEnable setOn:NO];
-
     }
 
     // If there is a defined angle limit, set the values in the table. Otherwise,
@@ -173,7 +176,6 @@ static  NSString *      angleFormat         = @"%i \u00b0";
         [self.angleLimit setText:@"--"];
         [self.angleStepper setEnabled:NO];
 
-        //[self.angleEnable setOn:NO];
 
     }
 
@@ -199,8 +201,20 @@ static  NSString *      angleFormat         = @"%i \u00b0";
         
         [self.orientationSettings setEnabled:YES];
         
-    } //else [self.orientationSettings setEnabled:NO];
+    }
     
+}
+
+#pragma mark - Device information
+
+- (void) refreshInformation {
+
+    if ( self.sensor.information.make ) [self.deviceMake setText:self.sensor.information.make];
+    if ( self.sensor.information.model ) [self.deviceModel setText:self.sensor.information.model];
+    if ( self.sensor.information.version ) [self.deviceVersion setText:self.sensor.information.version];
+    
+    if ( self.sensor.information.firmware ) [self.deviceFirmware setText:self.sensor.information.firmware];
+
 }
 
 #pragma mark - Surface Alarm Settings
@@ -648,6 +662,16 @@ static  NSString *      angleFormat         = @"%i \u00b0";
         [self.careSettings setEnabled:YES];
 
     }
+    
+}
+
+#pragma mark - Firmware update
+
+- (IBAction) startUpdate:(id)sender {
+
+    if ( self.delegate ) [self.delegate assetSettingsUpdate];
+    
+    [self.sensor.access requestLoader];
     
 }
 

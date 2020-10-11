@@ -97,7 +97,7 @@
 
     if ( ! self.userCode ) { _userCode = [NSUUID UUID]; }
     
-    [self performSegueWithIdentifier:@"unwindRegistration" sender:nil];
+    [self performSegueWithIdentifier:@"completeRegistration" sender:nil];
     
 }
 

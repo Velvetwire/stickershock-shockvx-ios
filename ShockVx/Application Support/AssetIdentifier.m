@@ -70,7 +70,8 @@
 
 //
 // Check for a match
-- (bool) matchesIdentifier:(AssetIdentifier *)identifier { return [[identifier identifierData] isEqual:self.identifier]; }
+- (bool) matchesIdentifier:(AssetIdentifier *)identifier { return [self matchesData:[identifier identifierData]]; }
+- (bool) matchesData:(NSData *)data { return [data isEqual:self.identifier]; }
 
 //
 // Generate an identifier string from the 64-bit data

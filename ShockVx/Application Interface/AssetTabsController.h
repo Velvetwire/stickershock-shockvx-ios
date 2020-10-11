@@ -8,7 +8,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AssetSensor.h"
+
+#import "SensorDevice.h"
+
+#import "AssetSettingsTabController.h"
+#import "AssetTrackingTabController.h"
+#import "AssetTelemetryTabController.h"
 
 // The tab items in the storyboard have tag numbers set
 // their index.
@@ -23,9 +28,9 @@ typedef NS_ENUM( NSUInteger, TabIndex ) {
 
 //
 // Tab bar controller interface
-@interface AssetTabsController : UITabBarController
+@interface AssetTabsController : UITabBarController <AssetTrackingDelegate, AssetSettingsDelegate>
 
-@property (nonatomic, strong)   AssetSensor *       sensor;
+@property (nonatomic, strong)   SensorDevice *      sensor;
 
 @property (nonatomic)           NSString *          assetDescription;
 @property (nonatomic)           NSString *          assetLocale;

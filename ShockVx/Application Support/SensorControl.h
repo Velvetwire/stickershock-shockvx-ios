@@ -5,26 +5,27 @@
 //  Copyright © 2020 Velvetwire, LLC. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "AssetIdentifier.h"
 
 @protocol SensorControlDelegate;
 
-// Control service
+// Control service identifier
 
-#define kSensorControlServiceUUID       @"56780000-5657-5353-2020-56454C564554"
+#define kSensorControlServicePrefix     @"56780000"
+
+#define kSensorControlIdentifyPrefix    @"56784964"
 
 // Tracking identification characteristics
 
-#define kSensorControlNodeUUID          @"5678546E-5657-5353-2020-56454C564554"
-#define kSensorControlLockUUID          @"5678546C-5657-5353-2020-56454C564554"
+#define kSensorControlNodePrefix        @"5678546E"
+#define kSensorControlLockPrefix        @"5678546C"
 
 // Tracking window characteristics
 
-#define kSensorControlOpenedUUID        @"5678546F-5657-5353-2020-56454C564554"
-#define kSensorControlClosedUUID        @"56785463-5657-5353-2020-56454C564554"
-#define kSensorControlWindowUUID        @"56785477-5657-5353-2020-56454C564554"
+#define kSensorControlOpenedPrefix      @"5678546F"
+#define kSensorControlClosedPrefix      @"56785463"
+#define kSensorControlWindowPrefix      @"56785477"
 
 typedef struct __attribute__ (( packed )) {
 
@@ -40,16 +41,11 @@ typedef NS_ENUM( NSUInteger, TrackingWindow ) {
     
 };
 
-// Sensor identification characteristic
-
-#define kSensorControlIdentifyUUID      @"56784964-5657-5353-2020-56454C564554"
-
 //
 // Sensor control service
 @interface SensorControl : NSObject
 
-+ (CBUUID *) serviceIdentifier;
-+ (instancetype) serviceForPeripheral:(CBPeripheral *)peripheral delegate:(id)delegate;
++ (instancetype) controlService:(NSUUID *)service forPeripheral:(CBPeripheral *)peripheral delegate:(id)delegate;
 
 - (void) discoveredCharacteristic:(CBCharacteristic *)characteristic;
 - (void) retrievedCharacteristic:(CBCharacteristic *)characteristic;

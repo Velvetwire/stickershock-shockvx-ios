@@ -27,6 +27,8 @@
     
 }
 
+//
+// Decode broadcast data records and content.
 - (NSData *) packetData:(NSData *)data {
 
     broadcast_record_t *    record  = (broadcast_record_t *) [data bytes];
@@ -39,8 +41,11 @@
         switch ( record->type ) {
                 
             case BROADCAST_TYPE_NORMAL(BROADCAST_TYPE_IDENTITY):
-            case BROADCAST_TYPE_SECURE(BROADCAST_TYPE_IDENTITY):
                 [self decodeIdentity:(broadcast_identity_t *)packet length:record->size - 1];
+                break;
+                
+            case BROADCAST_TYPE_SECURE(BROADCAST_TYPE_IDENTITY):
+                [self decodeSecurity:(broadcast_security_t *)packet length:record->size - 1];
                 break;
 
             case BROADCAST_TYPE_NORMAL(BROADCAST_TYPE_TEMPERATURE):
@@ -71,6 +76,8 @@
     
 }
 
+//
+// Received a normal identity record in the broadcast.
 - (void) decodeIdentity:(broadcast_identity_t *)packet length:(int)length {
 
     _identifier     = [AssetIdentifier identifierWithData:[NSData dataWithBytes:&(packet->identity) length:sizeof(hash_t)]];
@@ -79,12 +86,26 @@
     
 }
 
+//
+// Received a secure identity record in the broadcast.
+- (void) decodeSecurity:(broadcast_security_t *)packet length:(int)length {
+
+    _identifier     = [AssetIdentifier identifierWithData:[NSData dataWithBytes:&(packet->identity) length:sizeof(hash_t)]];
+    _battery        = [NSNumber numberWithChar:packet->battery];
+    _horizon        = [NSNumber numberWithChar:packet->horizon];
+    
+}
+
+//
+// Received a basic temperature record in the broadcast.
 - (void) decodeTemperature:(broadcast_temperature_t *)packet length:(int)length {
     
     _temperature    = [NSNumber numberWithFloat:((float)packet->measurement / (float)1e2)];
     
 }
 
+//
+// Received an atmospheric telemetry record in the broadcast.
 - (void) decodeAtmosphere:(broadcast_atmosphere_t *)packet length:(int)length {
 
     _airTemperature = [NSNumber numberWithFloat:((float)packet->temperature.measurement / (float)1e2)];
@@ -93,6 +114,8 @@
 
 }
 
+//
+// Received a handling and orientation record in the broadcast.
 - (void) decodeHandling:(broadcast_handling_t *)packet length:(int)length {
     
     _orientationFace    = [NSNumber numberWithChar:BROADCAST_HANLDING_FACE(packet->orientation)];
@@ -110,6 +133,8 @@
         
 }
 
+//
+// Received a product variant declaration in the broadcast.
 - (void) decodeVariant:(broadcast_variant_t *)packet length:(int)length {
 
     _variant            = packet->type;

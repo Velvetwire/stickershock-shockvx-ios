@@ -8,7 +8,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AssetSensor.h"
+#import "SensorDevice.h"
+
+@protocol AssetSettingsDelegate;
 
 // The telemetry measurement interval can be either
 // set to fast or slow.
@@ -61,26 +63,35 @@ typedef NS_ENUM ( NSUInteger, PreferredOrientation ) {
 
 @interface AssetSettingsTabController : UITableViewController
 
-@property (nonatomic, weak)     AssetSensor *       sensor;
+@property (nonatomic, weak)     SensorDevice *              sensor;
+@property (nonatomic, weak)     id <AssetSettingsDelegate>  delegate;
 
-@property (nonatomic, strong)   NSNumber *          telemetryInterval;
-@property (nonatomic, strong)   NSNumber *          archiveInterval;
+@property (nonatomic, strong)   NSNumber *                  telemetryInterval;
+@property (nonatomic, strong)   NSNumber *                  archiveInterval;
 
-@property (nonatomic, strong)   NSNumber *          surfaceMinimum;
-@property (nonatomic, strong)   NSNumber *          surfaceMaximum;
+@property (nonatomic, strong)   NSNumber *                  surfaceMinimum;
+@property (nonatomic, strong)   NSNumber *                  surfaceMaximum;
 
-@property (nonatomic, strong)   NSNumber *          ambientMinimum;
-@property (nonatomic, strong)   NSNumber *          ambientMaximum;
+@property (nonatomic, strong)   NSNumber *                  ambientMinimum;
+@property (nonatomic, strong)   NSNumber *                  ambientMaximum;
 
-@property (nonatomic, strong)   NSNumber *          humidityMinimum;
-@property (nonatomic, strong)   NSNumber *          humidityMaximum;
+@property (nonatomic, strong)   NSNumber *                  humidityMinimum;
+@property (nonatomic, strong)   NSNumber *                  humidityMaximum;
 
-@property (nonatomic, strong)   NSNumber *          pressureMinimum;
-@property (nonatomic, strong)   NSNumber *          pressureMaximum;
+@property (nonatomic, strong)   NSNumber *                  pressureMinimum;
+@property (nonatomic, strong)   NSNumber *                  pressureMaximum;
 
-@property (nonatomic, strong)   NSNumber *          angleMaximum;
-@property (nonatomic, strong)   NSNumber *          forceMaximum;
+@property (nonatomic, strong)   NSNumber *                  angleMaximum;
+@property (nonatomic, strong)   NSNumber *                  forceMaximum;
 
-@property (nonatomic)           OrientationFace     orientation;
+@property (nonatomic)           OrientationFace             orientation;
+
+- (void) refreshInformation;
+
+@end
+
+@protocol AssetSettingsDelegate <NSObject>
+
+- (void) assetSettingsUpdate;
 
 @end

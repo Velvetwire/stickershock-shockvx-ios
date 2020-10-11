@@ -1,6 +1,6 @@
 //
 //  project: Shock Vx
-//     file: SensorTag.h
+//     file: AssetTag.h
 //
 //  Copyright © 2020 Velvetwire, LLC. All rights reserved.
 //

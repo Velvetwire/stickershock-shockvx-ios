@@ -8,7 +8,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AssetSensor.h"
+#import "SensorDevice.h"
 
 typedef NS_ENUM( NSUInteger, TelemetryGroup ) {
 
@@ -38,7 +38,7 @@ typedef NS_ENUM( NSUInteger, HandlingItem ) {
 
 @interface AssetTelemetryTabController : UICollectionViewController <UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, weak)     AssetSensor *       sensor;
+@property (nonatomic, weak)     SensorDevice *      sensor;
 
 // Pressure values
 @property (nonatomic, strong)   NSNumber *          pressure;

@@ -30,12 +30,13 @@
 
 @implementation AssetListCell
 
-- (void) awakeFromNib {
-    
-    [super awakeFromNib];
+- (void) willMoveToSuperview:(UIView *)view {
 
-    [self.assetImage setImage:[self.assetImage.image imageWithTintColor:self.tintColor]];
+    [super willMoveToSuperview:view];
     
+    [self setTintColor:view.tintColor];
+    [self.assetImage setImage:[self.assetImage.image imageWithTintColor:self.tintColor]];
+
 }
 
 - (void) setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -83,8 +84,8 @@
 
     if ( (_surface = surface) ) {
     
-        [self.assetSurface setText:[NSString stringWithFormat:@"%1.2f\u2103", [surface floatValue]]];
         [self.assetSurface setTextColor:self.tintColor];
+        [self.assetSurface setText:[NSString stringWithFormat:@"%1.2f\u2103", [surface floatValue]]];
         
     } else {
     
@@ -99,8 +100,8 @@
 
     if ( (_ambient = ambient) ) {
     
-        [self.assetAmbient setText:[NSString stringWithFormat:@"%1.2f\u2103", [ambient floatValue]]];
         [self.assetAmbient setTextColor:self.tintColor];
+        [self.assetAmbient setText:[NSString stringWithFormat:@"%1.2f\u2103", [ambient floatValue]]];
         
     } else {
     
@@ -115,8 +116,8 @@
 
     if ( (_humidity = humidity) ) {
         
-        [self.assetHumidity setText:[NSString stringWithFormat:@"%1.1f%%", [humidity floatValue]]];
         [self.assetHumidity setTextColor:self.tintColor];
+        [self.assetHumidity setText:[NSString stringWithFormat:@"%1.1f%%", [humidity floatValue]]];
         
     } else {
         
@@ -131,8 +132,8 @@
 
     if ( (_pressure = pressure) ) {
         
-        [self.assetPressure setText:[NSString stringWithFormat:@"%1.3f bar", [pressure floatValue]]];
         [self.assetPressure setTextColor:self.tintColor];
+        [self.assetPressure setText:[NSString stringWithFormat:@"%1.3f bar", [pressure floatValue]]];
         
     } else {
     

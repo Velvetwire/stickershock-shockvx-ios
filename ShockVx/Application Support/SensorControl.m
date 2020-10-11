@@ -11,7 +11,7 @@
 
 @property (nonatomic, weak)     CBPeripheral *                  peripheral;
 @property (nonatomic, weak)     id <SensorControlDelegate>      delegate;
-@property (nonatomic)           bool                            updates;
+@property (nonatomic, strong)   NSUUID *                        service;
 
 @property (nonatomic, strong)   CBCharacteristic *              nodeCharacteristic;
 @property (nonatomic, strong)   CBCharacteristic *              lockCharacteristic;
@@ -22,38 +22,54 @@
 
 @property (nonatomic, strong)   CBCharacteristic *              identifyCharacteristic;
 
+@property (nonatomic)           bool                            updates;
+
 @end
 
 @implementation SensorControl
 
-+ (CBUUID *) serviceIdentifier { return [CBUUID UUIDWithString:kSensorControlServiceUUID]; }
+#pragma mark - Service instantiation
 
-+ (instancetype) serviceForPeripheral:(CBPeripheral *)peripheral delegate:(id)delegate { return [[SensorControl alloc] initWithPeripheral:peripheral delegate:delegate]; }
++ (instancetype) controlService:(NSUUID *)service forPeripheral:(CBPeripheral *)peripheral delegate:(id)delegate { return [[SensorControl alloc] initService:service forPeripheral:peripheral delegate:delegate]; }
 
-- (instancetype) initWithPeripheral:(CBPeripheral *)peripheral  delegate:(id)delegate {
+- (instancetype) initService:(NSUUID *)service forPeripheral:(CBPeripheral *)peripheral  delegate:(id)delegate {
 
-    if ( (self = [super init]) ) { _peripheral = peripheral; _delegate = delegate; }
-    
+    if ( (self = [super init]) ) { _service = service; _peripheral = peripheral; _delegate = delegate; }
+
     return ( self );
 
 }
 
+#pragma mark - Service identifier
+
+//
+// Construct a 128-bit Bluetooth UUID from the prefix and the service UUID suffix
+- (CBUUID *) identifierWithPrefix:(NSString *)prefix {
+
+    NSString *  suffix      = [[self.service UUIDString] substringFromIndex:8];
+    
+    return [CBUUID UUIDWithString:[prefix stringByAppendingString:suffix]];
+    
+}
+
+#pragma mark - Service characteristics
+
 - (void) discoveredCharacteristic:(CBCharacteristic *)characteristic {
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlNodeUUID]] ) { [self setNodeCharacteristic:characteristic]; }
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlLockUUID]] ) { [self setLockCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[self identifierWithPrefix:kSensorControlNodePrefix]] ) { [self setNodeCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[self identifierWithPrefix:kSensorControlLockPrefix]] ) { [self setLockCharacteristic:characteristic]; }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlOpenedUUID]] ) { [self setOpenedCharacteristic:characteristic]; }
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlClosedUUID]] ) { [self setClosedCharacteristic:characteristic]; }
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlWindowUUID]] ) { [self setWindowCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[self identifierWithPrefix:kSensorControlOpenedPrefix]] ) { [self setOpenedCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[self identifierWithPrefix:kSensorControlClosedPrefix]] ) { [self setClosedCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[self identifierWithPrefix:kSensorControlWindowPrefix]] ) { [self setWindowCharacteristic:characteristic]; }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlIdentifyUUID]] ) { [self setIdentifyCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[self identifierWithPrefix:kSensorControlIdentifyPrefix]] ) { [self setIdentifyCharacteristic:characteristic]; }
 
 }
 
 - (void) retrievedCharacteristic:(CBCharacteristic *)characteristic {
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlNodeUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.nodeCharacteristic.UUID] ) {
         
         unsigned char *     bytes   = (unsigned char *) [characteristic.value bytes];
         _trackingNode               = nil;
@@ -64,7 +80,7 @@
         
     }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlLockUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.lockCharacteristic.UUID] ) {
         
         unsigned char *     bytes   = (unsigned char *) [characteristic.value bytes];
         _trackingLock               = nil;
@@ -75,7 +91,7 @@
         
     }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlOpenedUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.openedCharacteristic.UUID] ) {
         
         unsigned char *     bytes   = (unsigned char *) [characteristic.value bytes];
         _uuidOpened                 = nil;
@@ -86,7 +102,7 @@
         
     }
     
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlClosedUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.closedCharacteristic.UUID] ) {
         
         unsigned char *     bytes   = (unsigned char *) [characteristic.value bytes];
         _uuidClosed                 = nil;
@@ -97,7 +113,7 @@
         
     }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlWindowUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.windowCharacteristic.UUID] ) {
         
         control_window_t *  window  = (control_window_t *) [characteristic.value bytes];
         
@@ -117,13 +133,8 @@
 // A write to a characteristic has been confirmed.
 - (void) confirmedCharacteristic:(CBCharacteristic *)characteristic {
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlOpenedUUID]] ) {
-        [self.delegate sensorControl:self trackingWindow:kTrackingWindowOpened];
-    }
-
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorControlClosedUUID]] ) {
-        [self.delegate sensorControl:self trackingWindow:kTrackingWindowClosed];
-    }
+    if ( [characteristic.UUID isEqual:self.openedCharacteristic.UUID] ) { [self.delegate sensorControl:self trackingWindow:kTrackingWindowOpened]; }
+    if ( [characteristic.UUID isEqual:self.closedCharacteristic.UUID] ) { [self.delegate sensorControl:self trackingWindow:kTrackingWindowClosed]; }
 
 }
 

@@ -11,9 +11,10 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <UIKit/UIKit.h>
 
-#import "AssetIdentifier.h"
-#import "AssetSensor.h"
-#import "AssetTag.h"
+#import "AssetListCell.h"
+
+#import "SensorDevice.h"
+#import "UpdateDevice.h"
 
 @interface AssetListController : UITableViewController <CBCentralManagerDelegate, AssetTagDelegate>
 
