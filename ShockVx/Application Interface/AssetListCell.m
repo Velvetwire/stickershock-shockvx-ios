@@ -19,7 +19,8 @@
 @property (nonatomic, weak) IBOutlet    UILabel *           assetLocation;
 @property (nonatomic, weak) IBOutlet    UILabel *           assetStatus;
 @property (nonatomic, weak) IBOutlet    UILabel *           assetLabel;
-@property (nonatomic, weak) IBOutlet    UILabel *           assetRange;
+
+@property (nonatomic, weak) IBOutlet    UIImageView *       assetRange;
 
 @property (nonatomic, weak) IBOutlet    UILabel *           assetAmbient;
 @property (nonatomic, weak) IBOutlet    UILabel *           assetSurface;
@@ -30,13 +31,18 @@
 
 @implementation AssetListCell
 
+- (void) awakeFromNib {
+
+    [self.assetImage setTintColor:[UIColor lightGrayColor]];
+    
+}
+
 - (void) willMoveToSuperview:(UIView *)view {
 
     [super willMoveToSuperview:view];
     
     [self setTintColor:view.tintColor];
-    [self.assetImage setImage:[self.assetImage.image imageWithTintColor:self.tintColor]];
-
+    
 }
 
 - (void) setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -73,10 +79,27 @@
 
 }
 
-- (void) setRange:(NSString *)range {
+- (void) setRange:(NSNumber *)range {
 
-    if ( (_range = range) ) [self.assetRange setText:range];
-    else [self.assetRange setText:@""];
+    if ( (_range = range) ) {
+    
+        UIImage *   image = nil;
+        
+        if ( [range floatValue] <= 5.0 ) { image = [UIImage imageNamed:@"Near"]; }
+        else if ( [range floatValue] <= 20.0 ) { image = [UIImage imageNamed:@"Proximate"]; }
+        else { image = [UIImage imageNamed:@"Distant"]; }
+
+        [self.assetImage setImage:[self.assetImage.image imageWithTintColor:self.tintColor]];
+        [self.assetRange setImage:[image imageWithTintColor:self.tintColor]];
+        [self.assetRange setHidden:NO];
+        
+    } else {
+
+        [self.assetImage setImage:[self.assetImage.image imageWithTintColor:[UIColor lightGrayColor]]];
+        [self.assetRange setImage:nil];
+        [self.assetRange setHidden:YES];
+        
+    }
 
 }
 

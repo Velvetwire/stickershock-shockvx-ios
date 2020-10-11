@@ -191,8 +191,8 @@
 		073EB2A2250BF6CE00DD007B /* ShockVx */ = {
 			isa = PBXGroup;
 			children = (
-				0718CD55252A88700072B5AC /* Application Assets */,
 				073EB2BF250BF84E00DD007B /* Application */,
+				0718CD55252A88700072B5AC /* Application Assets */,
 				073EB2C4250BF94E00DD007B /* Application Data */,
 				073EB2C3250BF90700DD007B /* Application Interface */,
 				075C73FA25140B9000A0F5D7 /* Application Elements */,

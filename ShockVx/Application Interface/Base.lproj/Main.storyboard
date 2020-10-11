@@ -147,16 +147,16 @@
                                                 <constraint firstItem="cDj-NP-XMo" firstAttribute="centerY" secondItem="GBL-2p-DGD" secondAttribute="centerY" id="zyW-xA-mkT"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8q-AZ-oPT">
-                                            <rect key="frame" x="22.5" y="151" width="35" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <color key="textColor" systemColor="secondaryLabelColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0BL-or-4kS">
+                                            <rect key="frame" x="27.5" y="135" width="25" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="Hbv-Rf-h3a"/>
+                                                <constraint firstAttribute="width" constant="25" id="ea2-ft-JxQ"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="iB5-NY-fWl" firstAttribute="centerY" secondItem="t6O-NQ-7lP" secondAttribute="centerY" id="0j4-IE-8Gi"/>
-                                        <constraint firstItem="X8q-AZ-oPT" firstAttribute="bottom" secondItem="f60-xW-Z2d" secondAttribute="bottom" constant="-8" id="293-dU-4mG"/>
                                         <constraint firstItem="jVD-rQ-FNp" firstAttribute="centerY" secondItem="f60-xW-Z2d" secondAttribute="centerY" id="5nE-Ep-gdb"/>
                                         <constraint firstItem="t6O-NQ-7lP" firstAttribute="leading" secondItem="f60-xW-Z2d" secondAttribute="leading" constant="16" id="8P6-x7-0FY"/>
                                         <constraint firstItem="6NG-Kz-dLW" firstAttribute="leading" secondItem="jVD-rQ-FNp" secondAttribute="trailing" constant="16" id="9LA-fd-oqR"/>
@@ -165,8 +165,9 @@
                                         <constraint firstItem="6NG-Kz-dLW" firstAttribute="trailing" secondItem="f60-xW-Z2d" secondAttribute="trailing" constant="-16" id="Itf-bU-Bxw"/>
                                         <constraint firstItem="6NG-Kz-dLW" firstAttribute="top" secondItem="t6O-NQ-7lP" secondAttribute="bottom" constant="4" id="PBK-0d-cWF"/>
                                         <constraint firstItem="t6O-NQ-7lP" firstAttribute="trailing" secondItem="f60-xW-Z2d" secondAttribute="trailing" constant="-16" id="SJ1-EB-Vav"/>
-                                        <constraint firstItem="X8q-AZ-oPT" firstAttribute="centerX" secondItem="jVD-rQ-FNp" secondAttribute="centerX" id="SXS-fS-k2y"/>
+                                        <constraint firstAttribute="bottom" secondItem="0BL-or-4kS" secondAttribute="bottom" constant="15" id="Skh-qC-8Uc"/>
                                         <constraint firstItem="6NG-Kz-dLW" firstAttribute="bottom" secondItem="f60-xW-Z2d" secondAttribute="bottom" constant="-8" id="Yrj-1O-siI"/>
+                                        <constraint firstItem="0BL-or-4kS" firstAttribute="centerX" secondItem="jVD-rQ-FNp" secondAttribute="centerX" id="qBS-tS-JXE"/>
                                         <constraint firstItem="t6O-NQ-7lP" firstAttribute="top" secondItem="f60-xW-Z2d" secondAttribute="top" constant="8" id="qMB-1r-zLT"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -179,7 +180,7 @@
                                     <outlet property="assetLabel" destination="t6O-NQ-7lP" id="4zY-ku-hbx"/>
                                     <outlet property="assetLocation" destination="x59-oJ-k57" id="sMe-Wg-97n"/>
                                     <outlet property="assetPressure" destination="9WA-Kt-iIg" id="ZaT-fS-1up"/>
-                                    <outlet property="assetRange" destination="X8q-AZ-oPT" id="ekB-IK-2K6"/>
+                                    <outlet property="assetRange" destination="0BL-or-4kS" id="H9P-kr-34f"/>
                                     <outlet property="assetStatus" destination="iT4-29-lxI" id="hh5-lG-JGV"/>
                                     <outlet property="assetSurface" destination="cDj-NP-XMo" id="LQV-iW-RSe"/>
                                     <segue destination="H8E-UL-0a0" kind="show" identifier="showSensor" id="YQ1-EC-a6R"/>

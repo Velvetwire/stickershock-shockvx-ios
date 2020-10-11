@@ -16,8 +16,8 @@
 @property (nonatomic, strong)   NSString *      location;
 @property (nonatomic, strong)   NSString *      status;
 @property (nonatomic, strong)   NSString *      label;
-@property (nonatomic, strong)   NSString *      range;
 
+@property (nonatomic, strong)   NSNumber *      range;
 @property (nonatomic, strong)   NSNumber *      battery;
 @property (nonatomic, strong)   NSNumber *      surface;
 @property (nonatomic, strong)   NSNumber *      ambient;

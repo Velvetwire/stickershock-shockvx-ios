@@ -104,14 +104,13 @@
     NSDictionary *      asset       = [self.registry assetAtIndex:path.row];
     AssetIdentifier *   identifier  = [AssetIdentifier identifierWithData:[asset objectForKey:@"identifier"]];
     NSDictionary *      broadcast   = nil;
-    
+        
     if ( cell ) {
     
         NSDate *        opened      = [asset objectForKey:@"opened"];
         NSDate *        closed      = [asset objectForKey:@"closed"];
         
         [cell setIdentity:[identifier identifierString]];
-
         [cell setLocation:[asset objectForKey:@"location"]];
         [cell setLabel:[asset objectForKey:@"label"]];
         
@@ -133,14 +132,16 @@
 
         } else [cell setStatus:nil];
         
+        [cell setTintColor:self.view.tintColor];
+
     } else return nil;
         
     if ( identifier && (broadcast = [self.records objectForKey:[identifier identifierString]]) ) {
     
-        NSNumber *      signal      = [broadcast objectForKey:@"signal"];
+        NSNumber *      distance    = [broadcast objectForKey:@"distance"];
         NSNumber *      battery     = [broadcast objectForKey:@"battery"];
         
-        if ( signal ) [cell setRange:[NSString stringWithFormat:@"%i dB", [signal intValue]]];
+        if ( distance ) [cell setRange:distance];
         if ( battery ) [cell setBattery:battery];
 
         NSNumber *      surface     = [broadcast objectForKey:@"surface"];
@@ -542,6 +543,23 @@
     if ( broadcast.battery ) { [record setObject:broadcast.battery forKey:@"battery"]; }
     if ( broadcast.horizon ) { [record setObject:broadcast.horizon forKey:@"horizon"]; }
 
+    // Compute the distance in meters given the horizon and signal values.
+    // Note: distance (m) = 10 ^ ((horizon - rssi) * factor)
+    //       where N is propagation factor through air
+    
+    if ( broadcast.horizon ) {
+    
+        float      factor      = (float) (55e-3);
+        float      exponent    = (float) (factor * ([broadcast.horizon floatValue] - [rssi floatValue]));
+        float      distance    = (float) powf ( 10.0, exponent );
+
+        if ( distance < 0.1 ) { distance = 0.1; }
+        if ( distance > 100.0 ) { distance = 100.0; }
+        
+        [record setObject:[NSNumber numberWithFloat:distance] forKey:@"distance"];
+        
+    }
+    
     // If present in the broadcast, add the basic temperature information.
 
     if ( broadcast.temperature ) { [record setObject:broadcast.temperature forKey:@"surface"]; }
