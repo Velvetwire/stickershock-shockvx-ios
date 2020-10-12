@@ -92,23 +92,17 @@
     if ( placemark.administrativeArea ) [address appendString:[NSString stringWithFormat:@", %@", placemark.administrativeArea]];
     if ( placemark.ISOcountryCode ) [address appendString:[NSString stringWithFormat:@" (%@)", placemark.ISOcountryCode]];
 
-    if ( (_locationName = address) ) {
-    
-        if ( ! [self.locationField.text length] ) dispatch_async( dispatch_get_main_queue( ), ^{
-            if ( ![self.locationField isEditing] ) [self.locationField setText:self.locationName];
-        });
-    
-    }
+    if ( (_locationName = address) ) dispatch_async( dispatch_get_main_queue( ), ^{
+
+        [self setAssetLocale:address];
+
+    });
     
 }
 
 - (IBAction) locationReset:(id)sender {
 
-    if ( self.locationName ) {
-    
-        if ( ! [self.locationField isEditing] ) [self.locationField setText:self.locationName];
-    
-    }
+    if ( self.locationName ) [self setAssetLocale:self.locationName];
     
 }
 

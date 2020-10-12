@@ -15,7 +15,6 @@
 @property (nonatomic, weak) IBOutlet    BatteryControl *    assetBattery;
 @property (nonatomic, weak) IBOutlet    UIImageView *       assetImage;
 
-@property (nonatomic, weak) IBOutlet    UILabel *           assetIdentity;
 @property (nonatomic, weak) IBOutlet    UILabel *           assetLocation;
 @property (nonatomic, weak) IBOutlet    UILabel *           assetStatus;
 @property (nonatomic, weak) IBOutlet    UILabel *           assetLabel;
@@ -33,6 +32,8 @@
 
 - (void) awakeFromNib {
 
+    [super awakeFromNib];
+    
     [self.assetImage setTintColor:[UIColor lightGrayColor]];
     
 }
@@ -48,13 +49,6 @@
 - (void) setSelected:(BOOL)selected animated:(BOOL)animated {
     
     [super setSelected:selected animated:animated];
-
-}
-
-- (void) setIdentity:(NSString *)identity {
-
-    if ( (_identity = identity) ) [self.assetIdentity setText:identity];
-    else [self.assetIdentity setText:@""];
 
 }
 

@@ -23,6 +23,7 @@
 
 @property (nonatomic, strong)           NSMutableDictionary *   records;
 @property (nonatomic, strong)           NSMutableDictionary *   devices;
+@property (nonatomic, strong)           NSMutableSet *          refresh;
 
 @property (nonatomic, strong)           NSTimer *               centralTimer;
 @property (nonatomic, strong)           NSTimer *               signalTimer;
@@ -51,7 +52,7 @@
                                                                      options:@{ CBCentralManagerOptionShowPowerAlertKey:@NO, CBCentralManagerScanOptionAllowDuplicatesKey:@NO }];
 
     // Construct a central manager timer to refresh the scan every minute and
-    // a signal timer to refresh the broadcast signal table every 7.5 seconds.
+    // a signal timer to refresh the broadcast signal table every 10 seconds.
     
     _centralTimer               = [NSTimer scheduledTimerWithTimeInterval:60.0
                                                                    target:self
@@ -59,17 +60,13 @@
                                                                  userInfo:nil
                                                                   repeats:YES];
 
-    _signalTimer                = [NSTimer scheduledTimerWithTimeInterval:7.5
+    _signalTimer                = [NSTimer scheduledTimerWithTimeInterval:10.0
                                                                    target:self
                                                                  selector:@selector(centralTimer:)
                                                                  userInfo:nil
                                                                   repeats:YES];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    _refresh                    = [[NSMutableSet alloc] init];
 
 }
 
@@ -418,7 +415,20 @@
         }
         
     }
+
+    // If there are pending table rows to refresh, do that now and
+    // clear pending refresh list.
     
+    if ( [self.refresh count] && ![self.tableView isEditing] ) {
+
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:[self.refresh allObjects] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView endUpdates];
+
+        [self.refresh removeAllObjects];
+
+    }
+
 }
 
 //
@@ -487,24 +497,13 @@
 
     if ( serviceData ) {
     
-        NSMutableSet *          indexSet    = [[NSMutableSet alloc] init];
         NSData *                standard    = [serviceData objectForKey:[CBUUID UUIDWithString:kAssetBroadcastStandardUUID]];
         NSData *                extended    = [serviceData objectForKey:[CBUUID UUIDWithString:kAssetBroadcastExtendedUUID]];
         NSIndexPath *           item        = nil;
             
-        if ( standard && (item = [self centralManager:central didReceivePeripheral:peripheral broadcastData:standard RSSI:rssi]) ) [indexSet addObject:item];
-        if ( extended && (item = [self centralManager:central didReceivePeripheral:peripheral broadcastData:extended RSSI:rssi]) ) [indexSet addObject:item];
+        if ( standard && (item = [self centralManager:central didReceivePeripheral:peripheral broadcastData:standard RSSI:rssi]) ) [self.refresh addObject:item];
+        if ( extended && (item = [self centralManager:central didReceivePeripheral:peripheral broadcastData:extended RSSI:rssi]) ) [self.refresh addObject:item];
 
-        if ( [indexSet count] ) dispatch_async( dispatch_get_main_queue( ), ^{
-        
-            if ( ! [self.tableView isEditing] ) {
-                [self.tableView beginUpdates];
-                [self.tableView reloadRowsAtIndexPaths:[indexSet allObjects] withRowAnimation:UITableViewRowAnimationNone];
-                [self.tableView endUpdates];
-            }
-        
-        });
-        
     }
 
 }
