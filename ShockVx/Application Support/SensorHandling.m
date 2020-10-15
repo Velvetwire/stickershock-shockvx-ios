@@ -44,7 +44,7 @@
 
 - (void) retrievedCharacteristic:(CBCharacteristic *)characteristic {
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorHandlingValueUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.valueCharacteristic.UUID] ) {
         
         handling_values_t * value = (handling_values_t *) [characteristic.value bytes];
         
@@ -61,7 +61,7 @@
 
     }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorHandlingLimitUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.limitCharacteristic.UUID] ) {
         
         handling_values_t * value = memcpy ( &(_limits), [characteristic.value bytes], sizeof(handling_values_t) );
         

@@ -52,7 +52,7 @@
                                                                      options:@{ CBCentralManagerOptionShowPowerAlertKey:@NO, CBCentralManagerScanOptionAllowDuplicatesKey:@NO }];
 
     // Construct a central manager timer to refresh the scan every minute and
-    // a signal timer to refresh the broadcast signal table every 10 seconds.
+    // a signal timer to refresh the broadcast signal table every 7 seconds.
     
     _centralTimer               = [NSTimer scheduledTimerWithTimeInterval:60.0
                                                                    target:self
@@ -60,7 +60,7 @@
                                                                  userInfo:nil
                                                                   repeats:YES];
 
-    _signalTimer                = [NSTimer scheduledTimerWithTimeInterval:10.0
+    _signalTimer                = [NSTimer scheduledTimerWithTimeInterval:7.0
                                                                    target:self
                                                                  selector:@selector(centralTimer:)
                                                                  userInfo:nil
@@ -86,100 +86,6 @@
 
     // If there is no user code set, show the registration...
     if ( ! self.settings.userCode ) [self performSegueWithIdentifier:@"showRegistration" sender:nil];
-
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger) numberOfSectionsInTableView:(UITableView *)table { return ( 1 ); }
-
-- (NSInteger) tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section { return [self.registry assetCount]; }
-
-- (UITableViewCell *) tableView:(UITableView *)table cellForRowAtIndexPath:(NSIndexPath *)path {
-
-    AssetListCell *     cell        = [table dequeueReusableCellWithIdentifier:@"assetCell" forIndexPath:path];
-    NSDictionary *      asset       = [self.registry assetAtIndex:path.row];
-    AssetIdentifier *   identifier  = [AssetIdentifier identifierWithData:[asset objectForKey:@"identifier"]];
-    NSDictionary *      broadcast   = nil;
-        
-    if ( cell ) {
-    
-        NSDate *        opened      = [asset objectForKey:@"opened"];
-        NSDate *        closed      = [asset objectForKey:@"closed"];
-        
-        [cell setIdentity:[identifier identifierString]];
-        [cell setLocation:[asset objectForKey:@"location"]];
-        [cell setLabel:[asset objectForKey:@"label"]];
-        
-        if ( closed ) {
-            
-            NSDateFormatter *   formatter   = [[NSDateFormatter alloc] init];
-            formatter.dateStyle             = NSDateFormatterShortStyle;
-            formatter.timeStyle             = NSDateFormatterShortStyle;
-            
-            [cell setStatus:[NSString stringWithFormat:@"closed %@",[formatter stringFromDate:closed]]];
-
-        } else if ( opened ) {
-            
-            NSDateFormatter *   formatter   = [[NSDateFormatter alloc] init];
-            formatter.dateStyle             = NSDateFormatterShortStyle;
-            formatter.timeStyle             = NSDateFormatterShortStyle;
-            
-            [cell setStatus:[NSString stringWithFormat:@"opened %@",[formatter stringFromDate:opened]]];
-
-        } else [cell setStatus:nil];
-        
-        [cell setTintColor:self.view.tintColor];
-
-    } else return nil;
-        
-    if ( identifier && (broadcast = [self.records objectForKey:[identifier identifierString]]) ) {
-    
-        NSNumber *      distance    = [broadcast objectForKey:@"distance"];
-        NSNumber *      battery     = [broadcast objectForKey:@"battery"];
-        
-        if ( distance ) [cell setRange:distance];
-        if ( battery ) [cell setBattery:battery];
-
-        NSNumber *      surface     = [broadcast objectForKey:@"surface"];
-        NSNumber *      ambient     = [broadcast objectForKey:@"ambient"];
-        NSNumber *      humidity    = [broadcast objectForKey:@"humidity"];
-        NSNumber *      pressure    = [broadcast objectForKey:@"pressure"];
-        
-        [cell setSurface:surface];
-        [cell setAmbient:ambient];
-        [cell setHumidity:humidity];
-        [cell setPressure:pressure];
-        
-    } else {
-    
-        [cell setPressure:nil];
-        [cell setHumidity:nil];
-        [cell setAmbient:nil];
-        [cell setSurface:nil];
-        
-        [cell setBattery:nil];
-        [cell setRange:nil];
-        
-    }
-
-    return ( cell );
-
-}
-
-- (BOOL) tableView:(UITableView *)table canEditRowAtIndexPath:(NSIndexPath *)path { return YES; }
-
-- (void) tableView:(UITableView *)table commitEditingStyle:(UITableViewCellEditingStyle)style forRowAtIndexPath:(NSIndexPath *)path {
-
-    NSDictionary *  asset       = [self.registry assetAtIndex:path.row];
-    NSData *        identifier  = [asset objectForKey:@"identifier"];
-    
-    if ( style == UITableViewCellEditingStyleDelete ) {
-
-        [self.registry removeAssetWithIdentifier:identifier];
-        [table deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
-    
-    }
 
 }
 
@@ -291,7 +197,7 @@
     if ( index != NSNotFound ) {
         
         [self.tableView beginUpdates];
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView endUpdates];
     
     }
@@ -303,6 +209,103 @@
 - (IBAction) disconnectTracker:(UIStoryboardSegue *)segue {
 
     // NOTE: placeholder
+
+}
+
+
+#pragma mark - Table view data source and delegate
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)table { return ( 1 ); }
+
+- (NSInteger) tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section { return [self.registry assetCount]; }
+
+- (UITableViewCell *) tableView:(UITableView *)table cellForRowAtIndexPath:(NSIndexPath *)path {
+
+    AssetListCell *     cell        = [table dequeueReusableCellWithIdentifier:@"assetCell" forIndexPath:path];
+    NSDictionary *      asset       = [self.registry assetAtIndex:path.row];
+    AssetIdentifier *   identifier  = [AssetIdentifier identifierWithData:[asset objectForKey:@"identifier"]];
+    NSDictionary *      broadcast   = nil;
+        
+    if ( cell ) {
+    
+        NSDate *        opened      = [asset objectForKey:@"opened"];
+        NSDate *        closed      = [asset objectForKey:@"closed"];
+        
+        [cell setIdentity:[identifier identifierString]];
+        [cell setLocation:[asset objectForKey:@"location"]];
+        [cell setLabel:[asset objectForKey:@"label"]];
+        
+        if ( closed ) {
+            
+            NSDateFormatter *   formatter   = [[NSDateFormatter alloc] init];
+            formatter.dateStyle             = NSDateFormatterShortStyle;
+            formatter.timeStyle             = NSDateFormatterShortStyle;
+            
+            [cell setStatus:[NSString stringWithFormat:@"closed %@",[formatter stringFromDate:closed]]];
+
+        } else if ( opened ) {
+            
+            NSDateFormatter *   formatter   = [[NSDateFormatter alloc] init];
+            formatter.dateStyle             = NSDateFormatterShortStyle;
+            formatter.timeStyle             = NSDateFormatterShortStyle;
+            
+            [cell setStatus:[NSString stringWithFormat:@"opened %@",[formatter stringFromDate:opened]]];
+
+        } else [cell setStatus:nil];
+        
+        [cell setTintColor:self.view.tintColor];
+
+    } else return nil;
+        
+    if ( identifier && (broadcast = [self.records objectForKey:[identifier identifierString]]) ) {
+    
+        NSNumber *      distance    = [broadcast objectForKey:@"distance"];
+        NSNumber *      battery     = [broadcast objectForKey:@"battery"];
+        
+        if ( distance ) [cell setRange:distance];
+        if ( battery ) [cell setBattery:battery];
+
+        NSNumber *      surface     = [broadcast objectForKey:@"surface"];
+        NSNumber *      ambient     = [broadcast objectForKey:@"ambient"];
+        NSNumber *      humidity    = [broadcast objectForKey:@"humidity"];
+        NSNumber *      pressure    = [broadcast objectForKey:@"pressure"];
+        
+        [cell setSurface:surface];
+        [cell setAmbient:ambient];
+        [cell setHumidity:humidity];
+        [cell setPressure:pressure];
+        
+    } else {
+    
+        [cell setPressure:nil];
+        [cell setHumidity:nil];
+        [cell setAmbient:nil];
+        [cell setSurface:nil];
+        
+        [cell setBattery:nil];
+        [cell setRange:nil];
+        
+    }
+
+    return ( cell );
+
+}
+
+- (BOOL) tableView:(UITableView *)table canEditRowAtIndexPath:(NSIndexPath *)path { return YES; }
+
+- (void) tableView:(UITableView *)table commitEditingStyle:(UITableViewCellEditingStyle)style forRowAtIndexPath:(NSIndexPath *)path {
+
+    NSDictionary *  asset       = [self.registry assetAtIndex:path.row];
+    NSData *        identifier  = [asset objectForKey:@"identifier"];
+    
+    if ( style == UITableViewCellEditingStyleDelete ) {
+
+        [self.registry removeAssetWithIdentifier:identifier];
+        [self.refresh removeAllObjects];
+        
+        [table deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
+    
+    }
 
 }
 

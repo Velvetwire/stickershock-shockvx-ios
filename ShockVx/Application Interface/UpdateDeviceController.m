@@ -105,7 +105,7 @@
 
     if ( self.package.majorVersion && self.package.minorVersion ) {
     
-        [self.toVersion setText:[NSString stringWithFormat:@"Version %u.%u", [self.package.majorVersion unsignedIntValue], [self.package.minorVersion unsignedIntValue]]];
+        [self.toVersion setText:[NSString stringWithFormat:@"Version %u.%02u", [self.package.majorVersion unsignedIntValue], [self.package.minorVersion unsignedIntValue]]];
     
     }
     
@@ -123,7 +123,7 @@
 
     if ( self.device.update.versionMajor && self.device.update.versionMinor ) {
     
-        [self.fromVersion setText:[NSString stringWithFormat:@"Version %u.%u", [self.device.update.versionMajor unsignedIntValue], [self.device.update.versionMinor unsignedIntValue]]];
+        [self.fromVersion setText:[NSString stringWithFormat:@"Version %u.%02u", [self.device.update.versionMajor unsignedIntValue], [self.device.update.versionMinor unsignedIntValue]]];
     
     }
     

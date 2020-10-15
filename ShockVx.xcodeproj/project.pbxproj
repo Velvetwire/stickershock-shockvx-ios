@@ -35,11 +35,12 @@
 		0761F769252D0B2900C0B446 /* SensorAtmosphere.m in Sources */ = {isa = PBXBuildFile; fileRef = 0761F768252D0B2900C0B446 /* SensorAtmosphere.m */; };
 		0766F626252E51EF0019DBC4 /* AssetDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0766F625252E51EF0019DBC4 /* AssetDevice.m */; };
 		0766F630252EAF410019DBC4 /* SensorDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0766F62F252EAF410019DBC4 /* SensorDevice.m */; };
+		0769E3F0253684AF0032A600 /* GraphControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0769E3EF253684AF0032A600 /* GraphControl.m */; };
+		0769E3F4253684C80032A600 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0769E3F3253684C80032A600 /* GraphView.m */; };
 		077FB15D250D9DE30002A716 /* AssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB15C250D9DE30002A716 /* AssetViewController.m */; };
 		077FB160250D9E5B0002A716 /* AssetTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB15F250D9E5B0002A716 /* AssetTabsController.m */; };
 		077FB163250D9EE80002A716 /* AssetSettingsTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB162250D9EE80002A716 /* AssetSettingsTabController.m */; };
 		077FB169250D9FA10002A716 /* AssetTrackingTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB168250D9FA10002A716 /* AssetTrackingTabController.m */; };
-		077FB16C250DA1630002A716 /* AssetRecordsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB16B250DA1630002A716 /* AssetRecordsController.m */; };
 		077FB170250EEC0A0002A716 /* AccountRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB16F250EEC0A0002A716 /* AccountRegistrationViewController.m */; };
 		077FB172250EFBF10002A716 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077FB171250EFBF10002A716 /* Settings.bundle */; };
 		077FB17525104EA90002A716 /* SensorTelemetry.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17425104EA90002A716 /* SensorTelemetry.m */; };
@@ -49,6 +50,11 @@
 		07930B1F2529207E00BC9C39 /* AssetRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 07930B1E2529207E00BC9C39 /* AssetRegistry.m */; };
 		07930B24252A22B500BC9C39 /* AssetBroadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 07930B23252A22B500BC9C39 /* AssetBroadcast.m */; };
 		07A3F3BE25126887001BFFF1 /* SensorHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A3F3BD25126887001BFFF1 /* SensorHandling.m */; };
+		07EF280C25362DE3007EC0C4 /* ArchiveTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EF280B25362DE3007EC0C4 /* ArchiveTabsController.m */; };
+		07EF281025362FBB007EC0C4 /* AmbientEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EF280F25362FBB007EC0C4 /* AmbientEventCell.m */; };
+		07EF281825363234007EC0C4 /* SurfaceEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EF281725363234007EC0C4 /* SurfaceEventCell.m */; };
+		07EF281C25363319007EC0C4 /* AmbientArchiveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EF281B25363319007EC0C4 /* AmbientArchiveController.m */; };
+		07EF282025363331007EC0C4 /* SurfaceArchiveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EF281F25363331007EC0C4 /* SurfaceArchiveController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +111,10 @@
 		0766F625252E51EF0019DBC4 /* AssetDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetDevice.m; sourceTree = "<group>"; };
 		0766F62E252EAF410019DBC4 /* SensorDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorDevice.h; sourceTree = "<group>"; };
 		0766F62F252EAF410019DBC4 /* SensorDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorDevice.m; sourceTree = "<group>"; };
+		0769E3EE253684AF0032A600 /* GraphControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphControl.h; sourceTree = "<group>"; };
+		0769E3EF253684AF0032A600 /* GraphControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GraphControl.m; sourceTree = "<group>"; };
+		0769E3F2253684C80032A600 /* GraphView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
+		0769E3F3253684C80032A600 /* GraphView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
 		077FB15B250D9DE30002A716 /* AssetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetViewController.h; sourceTree = "<group>"; };
 		077FB15C250D9DE30002A716 /* AssetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetViewController.m; sourceTree = "<group>"; };
 		077FB15E250D9E5B0002A716 /* AssetTabsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTabsController.h; sourceTree = "<group>"; };
@@ -113,8 +123,6 @@
 		077FB162250D9EE80002A716 /* AssetSettingsTabController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetSettingsTabController.m; sourceTree = "<group>"; };
 		077FB167250D9FA10002A716 /* AssetTrackingTabController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTrackingTabController.h; sourceTree = "<group>"; };
 		077FB168250D9FA10002A716 /* AssetTrackingTabController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetTrackingTabController.m; sourceTree = "<group>"; };
-		077FB16A250DA1630002A716 /* AssetRecordsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetRecordsController.h; sourceTree = "<group>"; };
-		077FB16B250DA1630002A716 /* AssetRecordsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetRecordsController.m; sourceTree = "<group>"; };
 		077FB16E250EEC0A0002A716 /* AccountRegistrationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountRegistrationViewController.h; sourceTree = "<group>"; };
 		077FB16F250EEC0A0002A716 /* AccountRegistrationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccountRegistrationViewController.m; sourceTree = "<group>"; };
 		077FB171250EFBF10002A716 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ShockVx/Settings.bundle; sourceTree = "<group>"; };
@@ -132,6 +140,16 @@
 		07930B23252A22B500BC9C39 /* AssetBroadcast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetBroadcast.m; sourceTree = "<group>"; };
 		07A3F3BC25126887001BFFF1 /* SensorHandling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorHandling.h; sourceTree = "<group>"; };
 		07A3F3BD25126887001BFFF1 /* SensorHandling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorHandling.m; sourceTree = "<group>"; };
+		07EF280A25362DE3007EC0C4 /* ArchiveTabsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArchiveTabsController.h; sourceTree = "<group>"; };
+		07EF280B25362DE3007EC0C4 /* ArchiveTabsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArchiveTabsController.m; sourceTree = "<group>"; };
+		07EF280E25362FBB007EC0C4 /* AmbientEventCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AmbientEventCell.h; sourceTree = "<group>"; };
+		07EF280F25362FBB007EC0C4 /* AmbientEventCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AmbientEventCell.m; sourceTree = "<group>"; };
+		07EF281625363234007EC0C4 /* SurfaceEventCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SurfaceEventCell.h; sourceTree = "<group>"; };
+		07EF281725363234007EC0C4 /* SurfaceEventCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SurfaceEventCell.m; sourceTree = "<group>"; };
+		07EF281A25363319007EC0C4 /* AmbientArchiveController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AmbientArchiveController.h; sourceTree = "<group>"; };
+		07EF281B25363319007EC0C4 /* AmbientArchiveController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AmbientArchiveController.m; sourceTree = "<group>"; };
+		07EF281E25363331007EC0C4 /* SurfaceArchiveController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SurfaceArchiveController.h; sourceTree = "<group>"; };
+		07EF281F25363331007EC0C4 /* SurfaceArchiveController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SurfaceArchiveController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,15 +236,15 @@
 		073EB2C3250BF90700DD007B /* Application Interface */ = {
 			isa = PBXGroup;
 			children = (
-				071A1BFB2530D9E10013A256 /* Device Update */,
-				077FB16D250EEBE30002A716 /* Account Registration */,
-				077FB15A250D9DC60002A716 /* Asset Connection */,
-				077FB159250D9DBD0002A716 /* Asset View */,
-				073EB2CB250C08DF00DD007B /* Asset List */,
 				073EB2A6250BF6CE00DD007B /* SceneDelegate.h */,
 				073EB2A7250BF6CE00DD007B /* SceneDelegate.m */,
 				073EB2B4250BF6CF00DD007B /* Launch.storyboard */,
 				073EB2AC250BF6CE00DD007B /* Main.storyboard */,
+				077FB16D250EEBE30002A716 /* Account Registration */,
+				071A1BFB2530D9E10013A256 /* Device Update */,
+				077FB15A250D9DC60002A716 /* Asset Connection */,
+				077FB159250D9DBD0002A716 /* Asset View */,
+				073EB2CB250C08DF00DD007B /* Asset List */,
 			);
 			path = "Application Interface";
 			sourceTree = "<group>";
@@ -300,6 +318,10 @@
 				075C73FC25140BC400A0F5D7 /* BatteryControl.m */,
 				075C73FF25140BD400A0F5D7 /* SignalControl.h */,
 				075C740025140BD400A0F5D7 /* SignalControl.m */,
+				0769E3EE253684AF0032A600 /* GraphControl.h */,
+				0769E3EF253684AF0032A600 /* GraphControl.m */,
+				0769E3F2253684C80032A600 /* GraphView.h */,
+				0769E3F3253684C80032A600 /* GraphView.m */,
 			);
 			path = "Application Elements";
 			sourceTree = "<group>";
@@ -336,6 +358,54 @@
 			name = "Device Services";
 			sourceTree = "<group>";
 		};
+		0769E3F625376C4B0032A600 /* Archive */ = {
+			isa = PBXGroup;
+			children = (
+				07EF280A25362DE3007EC0C4 /* ArchiveTabsController.h */,
+				07EF280B25362DE3007EC0C4 /* ArchiveTabsController.m */,
+				07EF281A25363319007EC0C4 /* AmbientArchiveController.h */,
+				07EF281B25363319007EC0C4 /* AmbientArchiveController.m */,
+				07EF280E25362FBB007EC0C4 /* AmbientEventCell.h */,
+				07EF280F25362FBB007EC0C4 /* AmbientEventCell.m */,
+				07EF281E25363331007EC0C4 /* SurfaceArchiveController.h */,
+				07EF281F25363331007EC0C4 /* SurfaceArchiveController.m */,
+				07EF281625363234007EC0C4 /* SurfaceEventCell.h */,
+				07EF281725363234007EC0C4 /* SurfaceEventCell.m */,
+			);
+			name = Archive;
+			sourceTree = "<group>";
+		};
+		0769E3F725376D410032A600 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				077FB161250D9EE80002A716 /* AssetSettingsTabController.h */,
+				077FB162250D9EE80002A716 /* AssetSettingsTabController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		0769E3F825376D480032A600 /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				077FB167250D9FA10002A716 /* AssetTrackingTabController.h */,
+				077FB168250D9FA10002A716 /* AssetTrackingTabController.m */,
+			);
+			name = Tracking;
+			sourceTree = "<group>";
+		};
+		0769E3F925376D4F0032A600 /* Telemetry */ = {
+			isa = PBXGroup;
+			children = (
+				077FB17925111B4F0002A716 /* AssetTelemetryTabController.h */,
+				077FB17A25111B4F0002A716 /* AssetTelemetryTabController.m */,
+				075C73F62513FD4E00A0F5D7 /* AssetTelemetryHeader.h */,
+				075C73F72513FD4E00A0F5D7 /* AssetTelemetryHeader.m */,
+				077FB17C25111E680002A716 /* AssetTelemetryCell.h */,
+				077FB17D25111E680002A716 /* AssetTelemetryCell.m */,
+			);
+			name = Telemetry;
+			sourceTree = "<group>";
+		};
 		077FB159250D9DBD0002A716 /* Asset View */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,18 +420,10 @@
 			children = (
 				077FB15E250D9E5B0002A716 /* AssetTabsController.h */,
 				077FB15F250D9E5B0002A716 /* AssetTabsController.m */,
-				077FB161250D9EE80002A716 /* AssetSettingsTabController.h */,
-				077FB162250D9EE80002A716 /* AssetSettingsTabController.m */,
-				077FB167250D9FA10002A716 /* AssetTrackingTabController.h */,
-				077FB168250D9FA10002A716 /* AssetTrackingTabController.m */,
-				077FB17925111B4F0002A716 /* AssetTelemetryTabController.h */,
-				077FB17A25111B4F0002A716 /* AssetTelemetryTabController.m */,
-				077FB16A250DA1630002A716 /* AssetRecordsController.h */,
-				077FB16B250DA1630002A716 /* AssetRecordsController.m */,
-				075C73F62513FD4E00A0F5D7 /* AssetTelemetryHeader.h */,
-				075C73F72513FD4E00A0F5D7 /* AssetTelemetryHeader.m */,
-				077FB17C25111E680002A716 /* AssetTelemetryCell.h */,
-				077FB17D25111E680002A716 /* AssetTelemetryCell.m */,
+				0769E3F925376D4F0032A600 /* Telemetry */,
+				0769E3F825376D480032A600 /* Tracking */,
+				0769E3F725376D410032A600 /* Settings */,
+				0769E3F625376C4B0032A600 /* Archive */,
 			);
 			name = "Asset Connection";
 			sourceTree = "<group>";
@@ -447,6 +509,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07EF281025362FBB007EC0C4 /* AmbientEventCell.m in Sources */,
 				073EB2B9250BF6D000DD007B /* Application.m in Sources */,
 				073EB2D2250D40ED00DD007B /* AssetIdentifier.m in Sources */,
 				077FB17E25111E680002A716 /* AssetTelemetryCell.m in Sources */,
@@ -460,16 +523,20 @@
 				075C73FD25140BC400A0F5D7 /* BatteryControl.m in Sources */,
 				071A1C092530FC6E0013A256 /* AssetPackage.m in Sources */,
 				073EB2C2250BF8EE00DD007B /* AppSettings.m in Sources */,
+				07EF281825363234007EC0C4 /* SurfaceEventCell.m in Sources */,
 				073EB2CA250C08D500DD007B /* AssetListCell.m in Sources */,
 				07930B24252A22B500BC9C39 /* AssetBroadcast.m in Sources */,
 				0761F765252D0B1400C0B446 /* SensorSurface.m in Sources */,
 				073EB2CF250D402400DD007B /* AssetTag.m in Sources */,
+				07EF280C25362DE3007EC0C4 /* ArchiveTabsController.m in Sources */,
 				073EB2E3250D59DC00DD007B /* DeviceBattery.m in Sources */,
 				077FB169250D9FA10002A716 /* AssetTrackingTabController.m in Sources */,
+				07EF281C25363319007EC0C4 /* AmbientArchiveController.m in Sources */,
 				0758621E252F726700D49EC8 /* UpdateDevice.m in Sources */,
 				073EB2A5250BF6CE00DD007B /* AppDelegate.m in Sources */,
 				075C73F82513FD4E00A0F5D7 /* AssetTelemetryHeader.m in Sources */,
 				077FB17525104EA90002A716 /* SensorTelemetry.m in Sources */,
+				0769E3F4253684C80032A600 /* GraphView.m in Sources */,
 				0766F626252E51EF0019DBC4 /* AssetDevice.m in Sources */,
 				073EB2B1250BF6CE00DD007B /* ShockVx.xcdatamodeld in Sources */,
 				077FB17B25111B4F0002A716 /* AssetTelemetryTabController.m in Sources */,
@@ -479,11 +546,12 @@
 				073EB2DD250D59BC00DD007B /* DeviceInformation.m in Sources */,
 				077FB15D250D9DE30002A716 /* AssetViewController.m in Sources */,
 				071A1BFF2530DA1A0013A256 /* UpdateDeviceController.m in Sources */,
+				0769E3F0253684AF0032A600 /* GraphControl.m in Sources */,
 				07930B1B25291E2000BC9C39 /* AssetRecord.m in Sources */,
 				073EB2DA250D59AD00DD007B /* DeviceAccess.m in Sources */,
 				077FB160250D9E5B0002A716 /* AssetTabsController.m in Sources */,
-				077FB16C250DA1630002A716 /* AssetRecordsController.m in Sources */,
 				073EB2E0250D59CE00DD007B /* SensorControl.m in Sources */,
+				07EF282025363331007EC0C4 /* SurfaceArchiveController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

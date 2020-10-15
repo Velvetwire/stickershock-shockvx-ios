@@ -8,6 +8,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "SensorDevice.h"
 
 typedef NS_ENUM( NSUInteger, TelemetryGroup ) {

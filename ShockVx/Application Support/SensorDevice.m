@@ -182,6 +182,17 @@
 
 }
 
+//
+// Surface temperature archive event received
+
+- (void) sensorSurface:(SensorSurface *)surface eventIndex:(NSNumber *)index {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationSurfaceEvents
+                                                        object:self
+                                                      userInfo:@{@"index":index}];
+
+}
+
 #pragma mark - Atmospherics delegate
 
 //
@@ -211,6 +222,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationAtmosphericLimits
                                                         object:self
                                                       userInfo:nil];
+
+}
+
+//
+// Atmospheric archive event received
+- (void) sensorAtmosphere:(SensorAtmosphere *)atmosphere eventIndex:(NSNumber *)index {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSensorNotificationAtmosphericEvents
+                                                        object:self
+                                                      userInfo:@{@"index":index}];
 
 }
 

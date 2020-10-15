@@ -40,7 +40,7 @@
 
 - (void) retrievedCharacteristic:(CBCharacteristic *)characteristic {
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorTelemetryIntervalUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.intervalCharacteristic.UUID] ) {
         
         float *         interval    = (float *) [characteristic.value bytes];
         _interval                   = interval ? [NSNumber numberWithFloat:(*interval)] : nil;
@@ -49,7 +49,7 @@
         
     }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorTelemetryArchivalUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.archivalCharacteristic.UUID] ) {
         
         float *         archival    = (float *) [characteristic.value bytes];
         _archival                   = archival ? [NSNumber numberWithFloat:(*archival)] : nil;

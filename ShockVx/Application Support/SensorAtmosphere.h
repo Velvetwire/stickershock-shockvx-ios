@@ -14,7 +14,7 @@
 
 #define kSensorAtmosphereServiceUUID    @"41740000-5657-5353-2020-56454C564554"
 
-// Telemetry values and limits characteristics
+// Atmospheric values and limits characteristics
 
 #define kSensorAtmosphereValueUUID      @"41744D76-5657-5353-2020-56454C564554"
 #define kSensorAtmosphereLowerUUID      @"41744C6C-5657-5353-2020-56454C564554"
@@ -27,6 +27,21 @@ typedef struct __attribute__ (( packed )) {
     float       pressure;               // Air pressure (bars)
 
 } atmosphere_values_t;
+
+// Atmospheric archive events
+
+#define kSensorAtmosphereCountUUID      @"41745263-5657-5353-2020-56454C564554"
+#define kSensorAtmosphereEventUUID      @"41745265-5657-5353-2020-56454C564554"
+
+typedef struct __attribute__ (( packed )) {
+
+    unsigned        time;               // UTC time stamp
+
+    signed short    temperature;        // Temperature value (1/100 Degree Celsius)
+    signed short    humidity;           // Humidity value (1/100 percent)
+    signed short    pressure;           // Pressure value (millibars)
+
+} atmosphere_event_t;
 
 //
 // Sensor atmospherics service
@@ -50,6 +65,9 @@ typedef struct __attribute__ (( packed )) {
 @property (nonatomic, strong)   NSNumber *      pressureMinimum;
 @property (nonatomic, strong)   NSNumber *      pressureMaximum;
 
+@property (nonatomic, readonly) NSUInteger      number;
+@property (nonatomic, readonly) NSArray *       events;
+
 @end
 
 //
@@ -57,6 +75,8 @@ typedef struct __attribute__ (( packed )) {
 @protocol SensorAtmosphereDelegate <NSObject>
 
 - (void) sensorAtmosphere:(SensorAtmosphere *)atmosphere;
+- (void) sensorAtmosphere:(SensorAtmosphere *)atmosphere eventIndex:(NSNumber *)index;
+
 - (void) sensorMinimumAtmosphere:(SensorAtmosphere *)atmosphere;
 - (void) sensorMaximumAtmosphere:(SensorAtmosphere *)atmosphere;
 

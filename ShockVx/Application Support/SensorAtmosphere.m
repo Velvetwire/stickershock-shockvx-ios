@@ -15,6 +15,11 @@
 @property (nonatomic, strong)   CBCharacteristic *              valueCharacteristic;
 @property (nonatomic, strong)   CBCharacteristic *              lowerCharacteristic;
 @property (nonatomic, strong)   CBCharacteristic *              upperCharacteristic;
+@property (nonatomic, strong)   CBCharacteristic *              countCharacteristic;
+@property (nonatomic, strong)   CBCharacteristic *              eventCharacteristic;
+
+@property (nonatomic, strong)   NSMutableArray *                eventRecords;
+@property (nonatomic, strong)   NSNumber *                      eventCount;
 
 @property (nonatomic)           atmosphere_values_t             lowerLimits;
 @property (nonatomic)           atmosphere_values_t             upperLimits;
@@ -32,7 +37,14 @@
 
 - (instancetype) initWithPeripheral:(CBPeripheral *)peripheral  delegate:(id)delegate {
 
-    if ( (self = [super init]) ) { _peripheral = peripheral; _delegate = delegate; }
+    if ( (self = [super init]) ) {
+        
+        _eventRecords   = [[NSMutableArray alloc] init];
+
+        _peripheral     = peripheral;
+        _delegate       = delegate;
+
+    }
 
     return ( self );
 
@@ -43,12 +55,14 @@
     if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorAtmosphereValueUUID]] ) { [self setValueCharacteristic:characteristic]; }
     if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorAtmosphereLowerUUID]] ) { [self setLowerCharacteristic:characteristic]; }
     if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorAtmosphereUpperUUID]] ) { [self setUpperCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorAtmosphereCountUUID]] ) { [self setCountCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorAtmosphereEventUUID]] ) { [self setEventCharacteristic:characteristic]; }
 
 }
 
 - (void) retrievedCharacteristic:(CBCharacteristic *)characteristic {
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorAtmosphereValueUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.valueCharacteristic.UUID] ) {
         
         atmosphere_values_t *   value   = (atmosphere_values_t *) [characteristic.value bytes];
         
@@ -64,7 +78,7 @@
 
     }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorAtmosphereLowerUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.lowerCharacteristic.UUID] ) {
         
         atmosphere_values_t *   value   = memcpy ( &(_lowerLimits), [characteristic.value bytes], sizeof(atmosphere_values_t) );
 
@@ -80,7 +94,7 @@
 
     }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorAtmosphereUpperUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.upperCharacteristic.UUID] ) {
 
         atmosphere_values_t *   value   = memcpy ( &(_upperLimits), [characteristic.value bytes], sizeof(atmosphere_values_t) );
         
@@ -93,6 +107,38 @@
         }
         
         if ( self.delegate ) dispatch_async( dispatch_get_main_queue(), ^{ [self.delegate sensorMaximumAtmosphere:self]; });
+
+    }
+
+    if ( [characteristic.UUID isEqual:self.countCharacteristic.UUID] ) {
+
+        unsigned short          count   = *(unsigned short *) [characteristic.value bytes];
+        
+        [self setEventCount:[NSNumber numberWithUnsignedShort:count]];
+        
+        if ( [self.eventCount unsignedIntegerValue] > self.eventRecords.count ) [self requestNextEvent];
+        
+    }
+
+    if ( [characteristic.UUID isEqual:self.eventCharacteristic.UUID] ) {
+
+        atmosphere_event_t *    event   = (atmosphere_event_t *) [characteristic.value bytes];
+        
+        if ( event ) {
+            
+            NSNumber *           index  = [NSNumber numberWithUnsignedInteger: self.eventRecords.count];
+            NSDictionary *      record  = @{ @"date":[NSDate dateWithTimeIntervalSince1970:event->time],
+                                             @"temperature":[NSNumber numberWithFloat:((float) event->temperature / 1e2)],
+                                             @"humidity":[NSNumber numberWithFloat:((float) event->humidity / 1e3)],
+                                             @"pressure":[NSNumber numberWithFloat:((float) event->humidity / 1e4)] };
+
+            [self.eventRecords addObject:record];
+
+            if ( self.delegate ) dispatch_async( dispatch_get_main_queue(), ^{ [self.delegate sensorAtmosphere:self eventIndex:index]; });
+            
+        } else [self.eventRecords removeAllObjects];
+        
+        if ( [self.eventCount unsignedIntegerValue] > self.eventRecords.count ) [self requestNextEvent];
 
     }
 
@@ -223,5 +269,20 @@
     }
 
 }
+
+#pragma mark - Archived events
+
+- (void) requestNextEvent {
+
+    unsigned short      index   = (unsigned short) self.eventRecords.count;
+    NSData *            data    = [NSData dataWithBytes:&(index) length:sizeof(short)];
+
+    [self.peripheral writeValue:data forCharacteristic:self.eventCharacteristic type:CBCharacteristicWriteWithResponse];
+
+}
+
+- (NSUInteger) number { return [self.eventCount unsignedIntegerValue]; }
+
+- (NSArray *) events { return [self.eventRecords copy]; }
 
 @end

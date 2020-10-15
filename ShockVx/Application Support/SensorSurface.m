@@ -15,6 +15,11 @@
 @property (nonatomic, strong)   CBCharacteristic *              valueCharacteristic;
 @property (nonatomic, strong)   CBCharacteristic *              lowerCharacteristic;
 @property (nonatomic, strong)   CBCharacteristic *              upperCharacteristic;
+@property (nonatomic, strong)   CBCharacteristic *              countCharacteristic;
+@property (nonatomic, strong)   CBCharacteristic *              eventCharacteristic;
+
+@property (nonatomic, strong)   NSMutableArray *                eventRecords;
+@property (nonatomic, strong)   NSNumber *                      eventCount;
 
 @end
 
@@ -26,8 +31,15 @@
 
 - (instancetype) initWithPeripheral:(CBPeripheral *)peripheral  delegate:(id)delegate {
 
-    if ( (self = [super init]) ) { _peripheral = peripheral; _delegate = delegate; }
+    if ( (self = [super init]) ) {
+        
+        _eventRecords   = [[NSMutableArray alloc] init];
 
+        _peripheral     = peripheral;
+        _delegate       = delegate;
+
+    }
+    
     return ( self );
 
 }
@@ -37,12 +49,14 @@
     if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorSurfaceValueUUID]] ) { [self setValueCharacteristic:characteristic]; }
     if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorSurfaceLowerUUID]] ) { [self setLowerCharacteristic:characteristic]; }
     if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorSurfaceUpperUUID]] ) { [self setUpperCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorSurfaceCountUUID]] ) { [self setCountCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorSurfaceEventUUID]] ) { [self setEventCharacteristic:characteristic]; }
 
 }
 
 - (void) retrievedCharacteristic:(CBCharacteristic *)characteristic {
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorSurfaceValueUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.valueCharacteristic.UUID] ) {
         
         float *                 value   = (float *) [characteristic.value bytes];
         
@@ -52,7 +66,7 @@
 
     }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorSurfaceLowerUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.lowerCharacteristic.UUID] ) {
 
         float *                 value   = (float *) [characteristic.value bytes];
         
@@ -62,7 +76,7 @@
 
     }
 
-    if ( [characteristic.UUID isEqual:[CBUUID UUIDWithString:kSensorSurfaceUpperUUID]] ) {
+    if ( [characteristic.UUID isEqual:self.upperCharacteristic.UUID] ) {
 
         float *                 value   = (float *) [characteristic.value bytes];
         
@@ -72,6 +86,36 @@
 
     }
 
+    if ( [characteristic.UUID isEqual:self.countCharacteristic.UUID] ) {
+
+        unsigned short          count   = *(unsigned short *) [characteristic.value bytes];
+        
+        [self setEventCount:[NSNumber numberWithUnsignedShort:count]];
+        
+        if ( [self.eventCount unsignedIntegerValue] > self.eventRecords.count ) [self requestNextEvent];
+        
+    }
+
+    if ( [characteristic.UUID isEqual:self.eventCharacteristic.UUID] ) {
+
+        surface_event_t *       event   = (surface_event_t *) [characteristic.value bytes];
+        
+        if ( event ) {
+            
+            NSNumber *           index  = [NSNumber numberWithUnsignedInteger: self.eventRecords.count];
+            NSDictionary *      record  = @{ @"date":[NSDate dateWithTimeIntervalSince1970:event->time],
+                                             @"temperature":[NSNumber numberWithFloat:((float) event->temperature / 1e2)] };
+
+            [self.eventRecords addObject:record];
+
+            if ( self.delegate ) dispatch_async( dispatch_get_main_queue(), ^{ [self.delegate sensorSurface:self eventIndex:index]; });
+
+        } else [self.eventRecords removeAllObjects];
+        
+        if ( [self.eventCount unsignedIntegerValue] > self.eventRecords.count ) [self requestNextEvent];
+
+    }
+    
 }
 
 #pragma mark - Temperature Limits
@@ -115,5 +159,20 @@
     }
 
 }
+
+#pragma mark - Archived events
+
+- (void) requestNextEvent {
+
+    unsigned short      index   = (unsigned short) self.eventRecords.count;
+    NSData *            data    = [NSData dataWithBytes:&(index) length:sizeof(short)];
+
+    [self.peripheral writeValue:data forCharacteristic:self.eventCharacteristic type:CBCharacteristicWriteWithResponse];
+
+}
+
+- (NSUInteger) number { return [self.eventCount unsignedIntegerValue]; }
+
+- (NSArray *) events { return [self.eventRecords copy]; }
 
 @end

@@ -84,8 +84,9 @@
 
 - (void) setPlacemark:(CLPlacemark *)placemark {
  
-    NSMutableString *   address = [[NSMutableString alloc] initWithString:placemark.thoroughfare];
+    NSMutableString *   address = [[NSMutableString alloc] initWithString:@""];
     
+    if ( placemark.thoroughfare ) [address appendString:placemark.thoroughfare];
     if ( placemark.subLocality ) [address appendString:[NSString stringWithFormat:@", %@", placemark.subLocality]];
     if ( placemark.locality ) [address appendString:[NSString stringWithFormat:@" %@", placemark.locality]];
     
@@ -257,16 +258,11 @@
     
 }
 
-- (bool) textField:(UITextField *)field shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-    return ( YES );
-    
-}
+- (bool) textField:(UITextField *)field shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string { return ( YES ); }
 
 - (bool) textFieldShouldReturn:(UITextField *)field {
     
-    if ( field.text.length ) [field resignFirstResponder];
-    else return ( NO );
+    [field resignFirstResponder];
     
     return ( YES );
     

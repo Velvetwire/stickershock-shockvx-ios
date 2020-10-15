@@ -29,12 +29,14 @@
 
 #define kSensorNotificationAtmosphericValues        @"sensorAtmosphericValues"
 #define kSensorNotificationAtmosphericLimits        @"sensorAtmosphericLimits"
+#define kSensorNotificationAtmosphericEvents        @"sensorAtmosphericEvents"
 
 #define kSensorNotificationHandlingValues           @"sensorHandlingValues"
 #define kSensorNotificationHandlingLimits           @"sensorHandlingLimits"
 
 #define kSensorNotificationSurfaceValues            @"sensorSurfaceValues"
 #define kSensorNotificationSurfaceLimits            @"sensorSurfaceLimits"
+#define kSensorNotificationSurfaceEvents            @"sensorSurfaceEvents"
 
 //
 // Sensor device reference object

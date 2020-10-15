@@ -104,6 +104,7 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     if ( self.archiveInterval ) {
     
         if ( [self.archiveInterval floatValue] >= kArchiveIntervalSlow ) [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingSlow];
+        else if ( [self.archiveInterval floatValue] >= kArchiveIntervalMedium ) [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingMedium];
         else [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingFast];
     
     }
@@ -589,8 +590,12 @@ static  NSString *      angleFormat         = @"%i \u00b0";
 
     NSUInteger  index   = [(UISegmentedControl *)sender selectedSegmentIndex];
     
-    if ( index == kTelemetrySettingSlow ) { _telemetryInterval = [NSNumber numberWithFloat:kTelemetryIntervalSlow]; }
-    else { _telemetryInterval = [NSNumber numberWithFloat:kTelemetryIntervalFast]; }
+    switch ( index ) {
+    
+        case kTelemetrySettingFast:     _telemetryInterval = [NSNumber numberWithFloat:kTelemetryIntervalFast]; break;
+        case kTelemetrySettingSlow:     _telemetryInterval = [NSNumber numberWithFloat:kTelemetryIntervalSlow]; break;
+    
+    }
     
     [self.sensor.telemetry setInterval:self.telemetryInterval];
     
@@ -602,7 +607,7 @@ static  NSString *      angleFormat         = @"%i \u00b0";
 
         if ( [interval floatValue] >= kTelemetryIntervalSlow ) [self.telemetrySettings setSelectedSegmentIndex:kTelemetrySettingSlow];
         else [self.telemetrySettings setSelectedSegmentIndex:kTelemetrySettingFast];
-        
+
         [self.telemetrySettings setEnabled:YES];
         
     }
@@ -612,9 +617,14 @@ static  NSString *      angleFormat         = @"%i \u00b0";
 - (IBAction) archiveIntervalSelected:(id)sender {
 
     NSUInteger  index   = [(UISegmentedControl *)sender selectedSegmentIndex];
+
+    switch ( index ) {
     
-    if ( index == kArchiveSettingSlow ) { _archiveInterval = [NSNumber numberWithFloat:kArchiveIntervalSlow]; }
-    else { _archiveInterval = [NSNumber numberWithFloat:kArchiveIntervalFast]; }
+        case kArchiveSettingFast:       _archiveInterval = [NSNumber numberWithFloat:kArchiveIntervalFast]; break;
+        case kArchiveSettingMedium:     _archiveInterval = [NSNumber numberWithFloat:kArchiveIntervalMedium]; break;
+        case kArchiveSettingSlow:       _archiveInterval = [NSNumber numberWithFloat:kArchiveIntervalSlow]; break;
+    
+    }
     
     [self.sensor.telemetry setArchival:self.archiveInterval];
     
@@ -624,7 +634,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
 
     if ( (_archiveInterval = interval) ) {
 
-        if ( [interval floatValue] >= kArchiveIntervalSlow ) [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingSlow];
+        if ( [self.archiveInterval floatValue] >= kArchiveIntervalSlow ) [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingSlow];
+        else if ( [self.archiveInterval floatValue] >= kArchiveIntervalMedium ) [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingMedium];
         else [self.archiveSettings setSelectedSegmentIndex:kArchiveSettingFast];
 
         [self.archiveSettings setEnabled:YES];

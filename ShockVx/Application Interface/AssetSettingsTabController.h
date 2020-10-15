@@ -8,6 +8,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "SensorDevice.h"
 
 @protocol AssetSettingsDelegate;
@@ -15,8 +16,8 @@
 // The telemetry measurement interval can be either
 // set to fast or slow.
 
-#define kTelemetryIntervalFast  ((float) 15.0)
-#define kTelemetryIntervalSlow  ((float) 60.0)
+#define kTelemetryIntervalFast      ((float) 15.0)
+#define kTelemetryIntervalSlow      ((float) 60.0)
 
 typedef NS_ENUM ( NSUInteger, TelemetrySetting ) {
 
@@ -28,12 +29,14 @@ typedef NS_ENUM ( NSUInteger, TelemetrySetting ) {
 // The telemetry archive interval can be either
 // set to fast or slow.
 
-#define kArchiveIntervalFast    ((float) 900.0)
-#define kArchiveIntervalSlow    ((float) 3600.0)
+#define kArchiveIntervalFast        ((float) 120.0)
+#define kArchiveIntervalMedium      ((float) 900.0)
+#define kArchiveIntervalSlow        ((float) 3600.0)
 
 typedef NS_ENUM ( NSUInteger, ArchiveSetting ) {
 
     kArchiveSettingFast,
+    kArchiveSettingMedium,
     kArchiveSettingSlow,
     
 };
@@ -41,8 +44,8 @@ typedef NS_ENUM ( NSUInteger, ArchiveSetting ) {
 // Force limits are grouped into care settings: either
 // careful or fragile.
 
-#define kForceLimitCareful      ((float) 6.0)
-#define kForceLimitFragile      ((float) 3.0)
+#define kForceLimitCareful          ((float) 6.0)
+#define kForceLimitFragile          ((float) 3.0)
 
 typedef NS_ENUM ( NSUInteger, CareSetting ) {
 

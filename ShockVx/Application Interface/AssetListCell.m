@@ -66,10 +66,15 @@
 
 }
 
+- (void) setIdentity:(NSString *)identity {
+
+    if ( (_identity = identity) ) [self.assetLabel setText:identity];
+    
+}
+
 - (void) setLabel:(NSString *)label {
 
     if ( (_label = label) ) [self.assetLabel setText:label];
-    else [self.assetLabel setText:@"Asset"];
 
 }
 

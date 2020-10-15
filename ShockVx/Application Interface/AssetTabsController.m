@@ -9,6 +9,7 @@
 
 #import "AppDelegate.h"
 #import "AssetTabsController.h"
+#import "ArchiveTabsController.h"
 
 //
 // Connected sensor tab controller instance
@@ -140,6 +141,24 @@
     [super viewWillDisappear:animated];
     
     if ( self.isMovingFromParentViewController) { [self.sensor detachFromManager]; }
+    
+}
+
+#pragma mark - Navigation
+
+//
+// Prepare for a segue transition to another view
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
+    // If transitioning to the archived events view...
+    
+    if ( [segue.identifier isEqualToString:@"showArchive"] ) {
+        
+        ArchiveTabsController *     controller  = (ArchiveTabsController *) [segue destinationViewController];
+        
+        [controller setSensor:self.sensor];
+        
+    }
     
 }
 
