@@ -18,4 +18,6 @@
 - (void) addPlot:(NSString *)label color:(UIColor *)color;
 - (void) setPlot:(NSString *)label points:(NSArray *)points;
 
+- (void) selectPlot:(NSString *)label pointAtIndex:(NSInteger)index;
+
 @end

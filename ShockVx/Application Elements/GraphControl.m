@@ -51,7 +51,8 @@
         [self.scrollView setScrollEnabled:YES];
         [self.scrollView setShowsVerticalScrollIndicator:NO];
         [self.scrollView setShowsHorizontalScrollIndicator:NO];
-
+        [self.scrollView setAutomaticallyAdjustsScrollIndicatorInsets:NO];
+        
         [self addSubview:self.scrollView];
         
     }
@@ -89,8 +90,6 @@
 - (void) setPlot:(NSString *)label points:(NSArray *)points {
 
     GraphView *     graphView   = [self.graphViews objectForKey:label];
-    _origin                     = 0.0;
-    _extent                     = 0.0;
     
     if ( points.count ) for ( NSValue * datum in points ) {
         
@@ -104,15 +103,12 @@
     if ( points ) {
     
         CGFloat     extent      = self.extent * self.scale;
+        CGFloat     middle      = self.bounds.size.width / 2.0;
         CGPoint     offset      = self.scrollView.contentOffset;
         
         if ( ! [self.scrollView isTracking] ) {
             
-            if ( (extent - 10.0) < offset.x ) {
-                [self.scrollView setContentOffset:CGPointMake( extent - 10.0, offset.y )];
-            } else if ( (extent + 10.0) > (offset.x + self.scrollView.bounds.size.width) ) {
-                [self.scrollView setContentOffset:CGPointMake( extent + 10.0 - self.scrollView.bounds.size.width, offset.y )];
-            }
+            if ( extent > middle ) [self.scrollView setContentOffset:CGPointMake( extent - middle, 0 )];
             
         }
 
@@ -124,13 +120,33 @@
     
 }
 
+- (void) selectPlot:(NSString *)label pointAtIndex:(NSInteger)index {
+
+    GraphView *     graphView   = [self.graphViews objectForKey:label];
+    NSArray *       points      = [graphView points];
+    
+    if ( points && (index < points.count) ) {
+    
+        CGFloat     middle      = self.scrollView.bounds.size.width / 2.0;
+        CGFloat     offset      = [(NSValue *)[points objectAtIndex:index] CGPointValue].x * self.scale;
+        
+        [self.scrollView setContentOffset:CGPointMake( offset - middle, 0 ) animated:YES];        
+        [graphView setSelect:[NSNumber numberWithInteger:index]];
+        
+    }
+    
+}
+
 - (void) layoutSubviews {
 
-    CGRect      area    = CGRectMake ( self.origin * self.scale, 0, 5.0 + ((self.extent - self.origin) * self.scale), self.bounds.size.height );
+    [super layoutSubviews];
+
+    CGRect      area    = CGRectMake ( 0, 0, (self.extent * self.scale) + 10.0, self.bounds.size.height );
+    CGFloat     half    = self.scrollView.bounds.size.width / 2.0;
     
     for ( GraphView * graph in [self.graphViews allValues] ) [graph setFrame:area];
 
-    [self.scrollView setContentSize:CGSizeMake( area.size.width, area.size.height )];
+    [self.scrollView setContentSize:CGSizeMake( area.size.width + half, area.size.height )];
 
 }
 

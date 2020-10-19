@@ -18,11 +18,11 @@
 // The tab items in the storyboard have tag numbers set
 // their index.
 
-typedef NS_ENUM( NSUInteger, TabIndex ) {
+typedef NS_ENUM( NSUInteger, AssetTabIndex ) {
 
-    kTabIndexTracking,
-    kTabIndexTelemetry,
-    kTabIndexSettings,
+    kAssetTabIndexTracking,
+    kAssetTabIndexTelemetry,
+    kAssetTabIndexSettings,
     
 };
 

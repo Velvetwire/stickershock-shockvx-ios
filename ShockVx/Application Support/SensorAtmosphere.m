@@ -283,6 +283,6 @@
 
 - (NSUInteger) number { return [self.eventCount unsignedIntegerValue]; }
 
-- (NSArray *) events { return [self.eventRecords copy]; }
+- (NSArray *) events { return [self eventRecords]; }
 
 @end

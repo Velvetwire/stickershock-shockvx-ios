@@ -254,6 +254,9 @@
         [self.trackingController setDateOpened:control.timeOpened];
         [self.trackingController setDateClosed:control.timeClosed];
         
+        [self.settingsController refreshMemorySummary];
+        [self.settingsController refreshSensorSummary];
+
     }
     
 }

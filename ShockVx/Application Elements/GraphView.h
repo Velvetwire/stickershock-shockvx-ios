@@ -12,6 +12,7 @@
 @interface GraphView : UIView
 
 @property (nonatomic, strong)   NSArray *   points;
+@property (nonatomic, strong)   NSNumber *  select;
 
 @property (nonatomic)           float       range;
 @property (nonatomic)           float       scale;

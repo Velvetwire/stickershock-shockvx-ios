@@ -90,6 +90,8 @@ typedef NS_ENUM ( NSUInteger, PreferredOrientation ) {
 @property (nonatomic)           OrientationFace             orientation;
 
 - (void) refreshInformation;
+- (void) refreshMemorySummary;
+- (void) refreshSensorSummary;
 
 @end
 

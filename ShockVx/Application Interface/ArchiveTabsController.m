@@ -51,11 +51,27 @@
 
     MFMailComposeViewController *   controller  = [[MFMailComposeViewController alloc] init];
     NSDateFormatter *               formatter   = [[NSDateFormatter alloc] init];
+    NSString *                      section     = @"Capture";
+    NSDate *                        date        = [NSDate date];
+    
+    switch ( self.selectedIndex ) {
+    
+        case kArchiveTabIndexAmbient:
+            section     = @"Ambient temperature";
+            date        = [self.ambientController archiveStart];
+            break;
+            
+        case kArchiveTabIndexSurface:
+            section     = @"Surface tempreature";
+            date        = [self.surfaceController archiveStart];
+            break;
+
+    }
     
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
-    
-    NSString *                      subject     = [NSString stringWithFormat:@"Capture - %@", [formatter stringFromDate:[NSDate date]]];
+
+    NSString *                      subject     = [NSString stringWithFormat:@"%@ - %@", section, [formatter stringFromDate:date]];
     
     [controller setMailComposeDelegate:self];
     [controller setSubject:subject];
@@ -64,14 +80,22 @@
 
     [controller setMessageBody:message isHTML:NO];
 
-    [controller addAttachmentData:[self.ambientController archiveAttachment]
-                         mimeType:@"text/csv"
-                         fileName:@"Ambient.csv"];
-
-    [controller addAttachmentData:[self.surfaceController archiveAttachment]
-                         mimeType:@"text/csv"
-                         fileName:@"surface.csv"];
-
+    switch ( self.selectedIndex ) {
+    
+        case kArchiveTabIndexAmbient:
+            [controller addAttachmentData:[self.ambientController archiveAttachment]
+                                 mimeType:@"text/csv"
+                                 fileName:@"Ambient.csv"];
+            break;
+            
+        case kArchiveTabIndexSurface:
+            [controller addAttachmentData:[self.surfaceController archiveAttachment]
+                                 mimeType:@"text/csv"
+                                 fileName:@"Surface.csv"];
+            break;
+            
+    }
+    
     [self presentViewController:controller animated:YES completion:nil];
 
 }

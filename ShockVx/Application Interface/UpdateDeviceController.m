@@ -46,7 +46,7 @@
 
     // Load the firmware package from the embedded bundle.
     
-    [self setPackage:[self loadPackage:@"firmware"]];
+    [self setPackage:[self loadPackage:@"sensor"]];
 
     // Register for connection notices.
     

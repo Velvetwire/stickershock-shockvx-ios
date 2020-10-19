@@ -13,7 +13,6 @@
 // Control service identifier
 
 #define kSensorControlServicePrefix     @"56780000"
-
 #define kSensorControlIdentifyPrefix    @"56784964"
 
 // Tracking identification characteristics
@@ -41,6 +40,24 @@ typedef NS_ENUM( NSUInteger, TrackingWindow ) {
     
 };
 
+// Summary status characteristic
+
+#define kSensorControlSummaryPrefix     @"56784975"
+
+typedef struct __attribute__ (( packed )) {
+
+    unsigned short          status;         // Status flags
+    unsigned char           memory;         // Memory percentage available (0 - 100)
+    unsigned char           storage;        // Storage percentage available (0 - 100)
+
+} control_summary_t;
+
+#define kControlSurfaceSensorOK             (1 << 0)
+#define kControlAmbientSensorOK             (1 << 1)
+#define kControlHumiditySensorOK            (1 << 2)
+#define kControlPressureSensorOK            (1 << 3)
+#define kControlMovementSensorOK            (1 << 4)
+
 //
 // Sensor control service
 @interface SensorControl : NSObject
@@ -61,6 +78,15 @@ typedef NS_ENUM( NSUInteger, TrackingWindow ) {
 
 - (void) openUsingIdentifier:(NSUUID *)identifier;
 - (void) closeUsingIdentifier:(NSUUID *)identifier;
+
+@property (nonatomic, readonly) NSNumber *          storageUsed;
+@property (nonatomic, readonly) NSNumber *          memoryUsed;
+
+@property (nonatomic, readonly) bool                surfaceSensor;
+@property (nonatomic, readonly) bool                ambientSensor;
+@property (nonatomic, readonly) bool                humiditySensor;
+@property (nonatomic, readonly) bool                pressureSensor;
+@property (nonatomic, readonly) bool                movementSensor;
 
 - (void) identifySensor:(unsigned char)seconds;
 

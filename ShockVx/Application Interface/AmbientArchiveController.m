@@ -33,6 +33,9 @@
     [self.eventGraph.layer setCornerRadius:10.0];
     [self.eventGraph addPlot:@"temperature" color:self.view.tintColor];
 
+    [self.eventGraph setScale:0.15];
+    [self.eventGraph setRange:100.0];
+    
     // Register for archive event notices.
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveEvent:) name:kSensorNotificationAtmosphericEvents object:nil];
@@ -43,7 +46,7 @@
 
     [super viewWillAppear:animated];
 
-    if ( self.eventRecords) [self plotRecords:self.eventRecords];
+    if ( [self.eventRecords count] == [self.sensor.atmosphere number] ) [self plotRecords:self.eventRecords];
     else [self setEventRecords:self.sensor.atmosphere.events];
     
 }
@@ -74,12 +77,14 @@
 - (void) plotRecords:(NSArray *)records {
 
     NSMutableArray *    points  = [[NSMutableArray alloc] init];
-
-    for ( NSDictionary * event in records ) {
-        
-        CGFloat         time    = (CGFloat) [records indexOfObject:event];
+    NSArray *           events  = [records copy];
+    NSDate *            start   = [(NSDictionary *)[events firstObject] objectForKey:@"date"];
+    
+    for ( NSDictionary * event in events ) {
+    
+        CGFloat         time    = [(NSDate *)[event objectForKey:@"date"] timeIntervalSinceDate:start];
         CGFloat         value   = (CGFloat) [[event objectForKey:@"temperature"] floatValue];
-        CGPoint         point   = CGPointMake( time * 10.0, value / 125.0 );
+        CGPoint         point   = CGPointMake( time, value );
         
         [points addObject:[NSValue valueWithCGPoint:point]];
         
@@ -120,54 +125,73 @@
     
 }
 
+- (void) tableView:(UITableView *)table didSelectRowAtIndexPath:(NSIndexPath *)path {
+
+    [self.eventGraph selectPlot:@"temperature" pointAtIndex:path.row];
+    
+}
+
+- (void) tableView:(UITableView *)table growFromIndex:(NSInteger)index {
+
+    NSMutableArray *    paths   = [[NSMutableArray alloc] init];
+    
+    // Determine the number of new event entries that need
+    // to be appended to the table and build an array of
+    // index paths. Add points to the graph.
+    
+    while ( index < self.eventRecords.count ) { [paths addObject:[NSIndexPath indexPathForRow:index ++ inSection:0]]; }
+
+    // Append the new rows to the table. At completion, update the
+    // graph with the plot array.
+
+    if ( paths.count ) {
+
+        [table beginUpdates];
+        [table insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [table endUpdates];
+        
+    }
+
+}
+
 #pragma mark - Sensor notifications
 
 - (void) didReceiveEvent:(NSNotification *)notification {
 
     SensorDevice *      sensor  = (SensorDevice *) notification.object;
     NSInteger           index   = [(NSNumber *) [notification.userInfo objectForKey:@"index"] integerValue];
-    NSInteger           total   = [sensor.atmosphere number];
-    NSMutableArray *    paths   = [[NSMutableArray alloc] init];
     
     if ( [self.sensor isEqual:sensor] ) {
         
-        // Determine the number of new event entries that need
-        // to be appended to the table and build an array of
-        // index paths. Add points to the graph.
-        
-        for ( NSInteger n = self.eventRecords.count; n <= index; ++ n ) {
-            [paths addObject:[NSIndexPath indexPathForRow:n inSection:0]];
-        }
+        NSInteger       start   = [self.eventTable numberOfRowsInSection:0];
+        NSInteger       total   = [sensor.atmosphere number];
+        NSInteger       count   = (index + 1);
 
         // If all of the events in the unit have been received, activate
         // the table and hide the progress. Otherwise, update progress.
 
-        if ( ++ index == total ) {
+        if ( count == total ) {
 
             [self.eventTable setUserInteractionEnabled:YES];
             [self.eventProgress setHidden:YES];
             [self.eventActivity stopAnimating];
 
-        } else [self.eventProgress setProgress:((float)index / (float)total)];
+        } else [self.eventProgress setProgress:((float)count / (float)total)];
 
-        [self setEventRecords:[sensor.atmosphere.events subarrayWithRange:NSMakeRange( 0, index )]];
+        [self setEventRecords:[sensor.atmosphere.events subarrayWithRange:NSMakeRange( 0, count )]];
         
-        // Append the new rows to the table. At completion, update the
-        // graph with the plot array.
-
-        if ( paths.count ) {
-
-            [self.eventTable beginUpdates];
-            [self.eventTable insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.eventTable endUpdates];
-            
-        }
+        if ( start < count ) [self tableView:self.eventTable growFromIndex:start];
 
     }
 
 }
-
 #pragma mark - Attachment data
+
+- (NSDate *) archiveStart {
+
+    return [(NSDictionary *)[self.eventRecords firstObject] objectForKey:@"date"];
+
+}
 
 - (NSData *) archiveAttachment {
 

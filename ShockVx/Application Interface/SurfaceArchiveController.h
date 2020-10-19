@@ -15,6 +15,7 @@
 
 @property (nonatomic, weak)     SensorDevice *              sensor;
 
+- (NSDate *) archiveStart;
 - (NSData *) archiveAttachment;
 
 @end

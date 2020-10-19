@@ -21,6 +21,7 @@
 @property (nonatomic, strong)   CBCharacteristic *              windowCharacteristic;
 
 @property (nonatomic, strong)   CBCharacteristic *              identifyCharacteristic;
+@property (nonatomic, strong)   CBCharacteristic *              summaryCharacteristic;
 
 @property (nonatomic)           bool                            updates;
 
@@ -64,6 +65,7 @@
     if ( [characteristic.UUID isEqual:[self identifierWithPrefix:kSensorControlWindowPrefix]] ) { [self setWindowCharacteristic:characteristic]; }
 
     if ( [characteristic.UUID isEqual:[self identifierWithPrefix:kSensorControlIdentifyPrefix]] ) { [self setIdentifyCharacteristic:characteristic]; }
+    if ( [characteristic.UUID isEqual:[self identifierWithPrefix:kSensorControlSummaryPrefix]] ) { [self setSummaryCharacteristic:characteristic]; }
 
 }
 
@@ -127,6 +129,22 @@
         
     }
 
+    if ( [characteristic.UUID isEqual:self.summaryCharacteristic.UUID] ) {
+        
+        control_summary_t * summary = (control_summary_t *) [characteristic.value bytes];
+        _storageUsed                = [NSNumber numberWithFloat:(float)(100.0 - summary->storage) / 100.0];
+        _memoryUsed                 = [NSNumber numberWithFloat:(float)(100 - summary->memory) / 100.0];
+
+        _surfaceSensor              = (summary->status & kControlSurfaceSensorOK) ? true : false;
+        _ambientSensor              = (summary->status & kControlAmbientSensorOK) ? true : false;
+        _humiditySensor             = (summary->status & kControlHumiditySensorOK) ? true : false;
+        _pressureSensor             = (summary->status & kControlPressureSensorOK) ? true : false;
+        _movementSensor             = (summary->status & kControlMovementSensorOK) ? true : false;
+
+        [self updatedCharacteristic:characteristic];
+
+    }
+    
 }
 
 //

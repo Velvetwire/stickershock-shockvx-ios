@@ -39,6 +39,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *              deviceFirmware;
 @property (weak, nonatomic) IBOutlet UIButton *             deviceUpdate;
 
+@property (weak, nonatomic) IBOutlet UIProgressView *       deviceStorageSpace;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *      sensorSurface;
+@property (weak, nonatomic) IBOutlet UITableViewCell *      sensorAmbient;
+@property (weak, nonatomic) IBOutlet UITableViewCell *      sensorHumidity;
+@property (weak, nonatomic) IBOutlet UITableViewCell *      sensorPressure;
+@property (weak, nonatomic) IBOutlet UITableViewCell *      sensorMovement;
+
 @end
 
 @implementation AssetSettingsTabController
@@ -80,6 +88,8 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     
     // Refresh the device information
     
+    [self refreshMemorySummary];
+    [self refreshSensorSummary];
     [self refreshInformation];
     
 }
@@ -206,7 +216,36 @@ static  NSString *      angleFormat         = @"%i \u00b0";
     
 }
 
-#pragma mark - Device information
+#pragma mark - Device information and summary status
+
+- (void) refreshMemorySummary {
+
+    if ( self.sensor.control.storageUsed ) {
+        
+        [self.deviceStorageSpace setProgress:[self.sensor.control.storageUsed floatValue]];
+        
+    }
+
+}
+
+- (void) refreshSensorSummary {
+
+    if ( self.sensor.control.surfaceSensor ) [self.sensorSurface setAccessoryType:UITableViewCellAccessoryCheckmark];
+    else [self.sensorSurface setAccessoryType:UITableViewCellAccessoryNone];
+
+    if ( self.sensor.control.ambientSensor ) [self.sensorAmbient setAccessoryType:UITableViewCellAccessoryCheckmark];
+    else [self.sensorAmbient setAccessoryType:UITableViewCellAccessoryNone];
+
+    if ( self.sensor.control.humiditySensor ) [self.sensorHumidity setAccessoryType:UITableViewCellAccessoryCheckmark];
+    else [self.sensorHumidity setAccessoryType:UITableViewCellAccessoryNone];
+
+    if ( self.sensor.control.pressureSensor ) [self.sensorPressure setAccessoryType:UITableViewCellAccessoryCheckmark];
+    else [self.sensorPressure setAccessoryType:UITableViewCellAccessoryNone];
+
+    if ( self.sensor.control.movementSensor ) [self.sensorMovement setAccessoryType:UITableViewCellAccessoryCheckmark];
+    else [self.sensorMovement setAccessoryType:UITableViewCellAccessoryNone];
+
+}
 
 - (void) refreshInformation {
 

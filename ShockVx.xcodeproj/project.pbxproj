@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		071A1BFF2530DA1A0013A256 /* UpdateDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071A1BFE2530DA1A0013A256 /* UpdateDeviceController.m */; };
 		071A1C092530FC6E0013A256 /* AssetPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 071A1C082530FC6E0013A256 /* AssetPackage.m */; };
-		071A1C1B2531C42B0013A256 /* firmware.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 071A1C1A2531C41C0013A256 /* firmware.pkg */; };
+		071E6118253BC66000BF0BB2 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077FB171250EFBF10002A716 /* Settings.bundle */; };
+		071E611C253BC93C00BF0BB2 /* sensor.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 071E611A253BC77300BF0BB2 /* sensor.pkg */; };
 		073EB2A5250BF6CE00DD007B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2A4250BF6CE00DD007B /* AppDelegate.m */; };
 		073EB2A8250BF6CE00DD007B /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 073EB2A7250BF6CE00DD007B /* SceneDelegate.m */; };
 		073EB2AE250BF6CE00DD007B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 073EB2AC250BF6CE00DD007B /* Main.storyboard */; };
@@ -42,7 +43,6 @@
 		077FB163250D9EE80002A716 /* AssetSettingsTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB162250D9EE80002A716 /* AssetSettingsTabController.m */; };
 		077FB169250D9FA10002A716 /* AssetTrackingTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB168250D9FA10002A716 /* AssetTrackingTabController.m */; };
 		077FB170250EEC0A0002A716 /* AccountRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB16F250EEC0A0002A716 /* AccountRegistrationViewController.m */; };
-		077FB172250EFBF10002A716 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077FB171250EFBF10002A716 /* Settings.bundle */; };
 		077FB17525104EA90002A716 /* SensorTelemetry.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17425104EA90002A716 /* SensorTelemetry.m */; };
 		077FB17B25111B4F0002A716 /* AssetTelemetryTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17A25111B4F0002A716 /* AssetTelemetryTabController.m */; };
 		077FB17E25111E680002A716 /* AssetTelemetryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 077FB17D25111E680002A716 /* AssetTelemetryCell.m */; };
@@ -62,7 +62,8 @@
 		071A1BFE2530DA1A0013A256 /* UpdateDeviceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateDeviceController.m; sourceTree = "<group>"; };
 		071A1C072530FC6E0013A256 /* AssetPackage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetPackage.h; sourceTree = "<group>"; };
 		071A1C082530FC6E0013A256 /* AssetPackage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetPackage.m; sourceTree = "<group>"; };
-		071A1C1A2531C41C0013A256 /* firmware.pkg */ = {isa = PBXFileReference; explicitFileType = compiled; name = firmware.pkg; path = "ShockVx Embed/firmware.pkg"; sourceTree = "<group>"; };
+		071E610F253BC45D00BF0BB2 /* sensor.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; path = sensor.pkg; sourceTree = "<group>"; };
+		071E611A253BC77300BF0BB2 /* sensor.pkg */ = {isa = PBXFileReference; explicitFileType = compiled; name = sensor.pkg; path = "ShockVx Embed/sensor.pkg"; sourceTree = "<group>"; };
 		073EB2A0250BF6CE00DD007B /* Shock Vx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shock Vx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		073EB2A3250BF6CE00DD007B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		073EB2A4250BF6CE00DD007B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				073EB2B2250BF6CF00DD007B /* Assets.xcassets */,
+				071E610F253BC45D00BF0BB2 /* sensor.pkg */,
 			);
 			path = "Application Assets";
 			sourceTree = "<group>";
@@ -183,7 +185,7 @@
 		071A1C022530E1E00013A256 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				071A1C1A2531C41C0013A256 /* firmware.pkg */,
+				071E611A253BC77300BF0BB2 /* sensor.pkg */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -275,10 +277,10 @@
 		073EB2CC250D3FB400DD007B /* Application Support */ = {
 			isa = PBXGroup;
 			children = (
-				0758621B252F71E200D49EC8 /* Update Services */,
 				0766F628252E9B440019DBC4 /* Asset Device */,
 				0766F629252E9BCA0019DBC4 /* Device Services */,
 				073EB2D7250D599000DD007B /* Sensor Services */,
+				0758621B252F71E200D49EC8 /* Update Services */,
 			);
 			path = "Application Support";
 			sourceTree = "<group>";
@@ -495,10 +497,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				073EB2B3250BF6CF00DD007B /* Assets.xcassets in Resources */,
-				077FB172250EFBF10002A716 /* Settings.bundle in Resources */,
+				071E6118253BC66000BF0BB2 /* Settings.bundle in Resources */,
+				071E611C253BC93C00BF0BB2 /* sensor.pkg in Resources */,
 				073EB2B6250BF6CF00DD007B /* Launch.storyboard in Resources */,
 				073EB2AE250BF6CE00DD007B /* Main.storyboard in Resources */,
-				071A1C1B2531C42B0013A256 /* firmware.pkg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,7 +697,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ShockVx/ShockVx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = EY4LZWYGFB;
 				INFOPLIST_FILE = ShockVx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -715,7 +717,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ShockVx/ShockVx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = EY4LZWYGFB;
 				INFOPLIST_FILE = ShockVx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

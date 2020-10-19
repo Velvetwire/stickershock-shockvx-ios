@@ -200,17 +200,17 @@
     if ( self.dateClosed ) {
 
         // NOTE: this is temporary
-        [self.actionButton setTitle:NSLocalizedString( @"Reset", @"Reset" ) forState:UIControlStateNormal];
+        [self.actionButton setTitle:NSLocalizedString( @"Reset Sensor", @"Reset" ) forState:UIControlStateNormal];
         [self.actionButton setHidden:NO];
 
     } else if ( self.dateOpened ) {
 
-        [self.actionButton setTitle:NSLocalizedString( @"Accept", @"Accept" ) forState:UIControlStateNormal];
+        [self.actionButton setTitle:NSLocalizedString( @"Close Tracking", @"Accept" ) forState:UIControlStateNormal];
         [self.actionButton setHidden:NO];
         
     } else {
 
-        [self.actionButton setTitle:NSLocalizedString( @"Track", @"Track" ) forState:UIControlStateNormal];
+        [self.actionButton setTitle:NSLocalizedString( @"Open Tracking", @"Open" ) forState:UIControlStateNormal];
         [self.actionButton setHidden:NO];
 
     }
